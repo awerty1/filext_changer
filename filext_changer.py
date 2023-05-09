@@ -1,7 +1,8 @@
 import os
 
 '''
-function to validate the input of the correct file extension 
+Function to validate the input of the correct file extension 
+Accepts extensions '.!ut' & '.part'
 '''
 
 
