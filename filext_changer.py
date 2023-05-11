@@ -34,7 +34,7 @@ A function that renames the extension ".! ut" to ".part" or vice versa.
 def rename_files(directory, extension, failed_file_path):
     try:
         counter = 0
-        #counter_minus = 0
+        ##counter_minus = 0
         failed_rename_files = []
         print("")
         for filename in os.listdir(directory):
