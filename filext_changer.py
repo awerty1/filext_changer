@@ -27,7 +27,7 @@ A function that renames the extension ".! ut" to ".part" or vice versa.
 #variables:
 *directory - current directory
 *extension - file extension
-*failed_file_path - 
+*failed_file_path - path to save failed files
 '''
 
 
