@@ -2,6 +2,43 @@ import os
 from datetime import datetime
 
 '''
+Function to choose action
+'''
+
+
+def choose_action():
+    while True:
+        print("Select an action to perform:")
+        print("1. Rename files with a specific extension")
+        print("2. Delete files with a specific extension")
+        action = int(input("Enter selection (1 or 2): "))
+        if action == 1 or action == 2:
+            return action
+        else:
+            print("Invalid input, please enter 1 or 2")
+
+
+'''
+Function to perform action
+'''
+def perform_action(directory, extension, failed_file_path, action):
+    if action == 1:
+        rename_files(directory, extension.lower(), failed_file_path)
+    elif action == 2:
+        delete_file_with_extension(directory, extension)
+
+'''
+Function to deleting extension
+Deletes all files with the given extension in the given directory
+'''
+def delete_file_with_extension(directory, extension):
+    for filename in os.listdir(directory):
+        if filename.endswith(extension):
+            os.remove(os.path.join(directory, filename))
+            print(f"Файл \"{filename}\" успешно удален из директории {directory}")
+
+
+'''
 Function to validate the input of the correct file extension. 
 Accepts extensions '.!ut' || '.part'.
 
@@ -145,4 +182,6 @@ if __name__ == '__main__':
     directory = input("Enter path to directory: ")
     extension = get_valid_extension()
     failed_file_path = os.path.abspath(os.path.join(directory, 'Renamed files.txt'))
-    rename_files(directory, extension.lower(), failed_file_path)
+    action = choose_action()
+    perform_action(directory, extension, failed_file_path, action)
+    #rename_files(directory, extension.lower(), failed_file_path)
