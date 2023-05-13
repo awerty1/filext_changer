@@ -131,11 +131,12 @@ def rename_with_status_messages(failed_rename_files, success_rename_files, faile
     # create a new file (failed rename files(count).txt) if such a file is already contained in the directory
     count = 1
     while os.path.exists(failed_file_path):
-        failed_file_path = os.path.abspath(os.path.join(directory, f"Renamed files({count}).txt"))
         count += 1
+        failed_file_path = os.path.abspath(os.path.join(directory, f"Renamed files({count}).txt"))
+
 
     now = datetime.now()
-    # format date as string
+    # format date as string e.g. "Sat 2023-05-13 17:12:36 PM"
     date_string = now.strftime("%a %Y-%m-%d %H:%M:%S %p %Z")
 
     # write list of "unsuccessful rename" of files
