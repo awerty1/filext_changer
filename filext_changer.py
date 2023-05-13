@@ -28,13 +28,15 @@ A function that renames the extension ".! ut" to ".part" or vice versa.
 *directory - current directory
 *extension - file extension
 *failed_file_path - path to save failed files
+*success_rename_files - list of successes renamed files
+*failed_rename_files - list of failed renamed files
+*counter - file counter
 '''
 
 
 def rename_files(directory, extension, failed_file_path):
     try:
         counter = 0
-        ##counter_minus = 0
         failed_rename_files = []
         success_rename_files = []
         print("")
@@ -49,8 +51,6 @@ def rename_files(directory, extension, failed_file_path):
 
             if os.path.exists(new_filename):
                 print(f"{counter + 1} \"{new_filename}\" - already exists, skipping")
-                # counter += 1
-                # counter_minus += 1
                 failed_rename_files.append(filename)
             else:
                 os.rename(old_filename, new_filename)
@@ -59,7 +59,6 @@ def rename_files(directory, extension, failed_file_path):
 
             counter += 1
 
-        # counter -= counter_minus
         if counter == 1:
             print(f"\nFile extension replacement completed successfully! {counter} file were renamed.")
         else:
@@ -78,23 +77,24 @@ def rename_files(directory, extension, failed_file_path):
 
 
 '''
-A function to add information to a file about files that cannot be renamed because they already exist.
+A function to add information to a file about successes renamed files and files that cannot be renamed because they 
+already exist.
 The current date and message are also output to the file.
 
 #variables:
 *failed_rename_files - list of failed rename files
+*success_rename_files - list of successes renamed files 
+*failed_file_path - path to file (returned to refresh filename)
 *date_string - current date
-*failed_file_path - path to file
+*count - counter for filename
 '''
 
 
 def rename_with_status_messages(failed_rename_files, success_rename_files, failed_file_path):
     # create a new file (failed rename files(count).txt) if such a file is already contained in the directory
-    # failed_file_path = os.path.abspath(os.path.join(directory, "failed rename files.txt"))
     count = 1
     while os.path.exists(failed_file_path):
         failed_file_path = os.path.abspath(os.path.join(directory, f"Renamed files({count}).txt"))
-        # failed_file_path = f"{directory}failed rename files({count}).txt"
         count += 1
 
     now = datetime.now()
