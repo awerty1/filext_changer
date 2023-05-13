@@ -60,10 +60,13 @@ def rename_files(directory, extension, failed_file_path):
             counter += 1
 
         # counter -= counter_minus
-        print(f"\nFile extension replacement completed successfully! {counter} files were renamed.")
+        if counter == 1:
+            print(f"\nFile extension replacement completed successfully! {counter} file were renamed.")
+        else:
+            print(f"\nFile extension replacement completed successfully! {counter} files were renamed.")
 
         # Write filed files to a file
-        failed_file_path = failed_success_renames_files(failed_rename_files, success_rename_files, failed_file_path)
+        failed_file_path = rename_with_status_messages(failed_rename_files, success_rename_files, failed_file_path)
         if len(failed_rename_files) == 1:
             print(f"{len(failed_rename_files)} file failed to rename, check {failed_file_path}")
         else:
@@ -85,7 +88,7 @@ The current date and message are also output to the file.
 '''
 
 
-def failed_success_renames_files(failed_rename_files, success_rename_files, failed_file_path):
+def rename_with_status_messages(failed_rename_files, success_rename_files, failed_file_path):
     # create a new file (failed rename files(count).txt) if such a file is already contained in the directory
     # failed_file_path = os.path.abspath(os.path.join(directory, "failed rename files.txt"))
     count = 1
