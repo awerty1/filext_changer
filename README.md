@@ -6,7 +6,9 @@
 
 ## Feature List:
 - [x] Change file extension .!ut to .part and vice versa.
-- [x] Saving failed renaming attempts and date to file.
+- [x] Saving success renaming and failed renaming attempts and date to file.
 - [ ] Removing extension .!ut || .part.
+- [ ] Adding extension {.N}
+- [ ] Deleting files with extension .!ur || .part
 
 
