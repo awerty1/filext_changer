@@ -99,7 +99,7 @@ def rename_with_status_messages(failed_rename_files, success_rename_files, faile
 
     now = datetime.now()
     # format date as string
-    date_string = now.strftime("%Y-%m-%d %H:%M:%S")
+    date_string = now.strftime("%a %Y-%m-%d %H:%M:%S %p %Z")
 
     # write list of "unsuccessful rename" of files
     with open(failed_file_path, "w") as f:
