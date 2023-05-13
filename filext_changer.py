@@ -90,7 +90,7 @@ def failed_success_renames_files(failed_rename_files, success_rename_files, fail
     # failed_file_path = os.path.abspath(os.path.join(directory, "failed rename files.txt"))
     count = 1
     while os.path.exists(failed_file_path):
-        failed_file_path = os.path.abspath(os.path.join(directory, f"Failed rename files({count}).txt"))
+        failed_file_path = os.path.abspath(os.path.join(directory, f"Renamed files({count}).txt"))
         # failed_file_path = f"{directory}failed rename files({count}).txt"
         count += 1
 
@@ -141,5 +141,5 @@ if __name__ == '__main__':
     # extension = '.part'
     # failed_file_path = input("Enter path to save failed file names: ")
     # failed_file_path = 'h:/CODE/Python/vogu project/File Extension/Failed rename files.txt'
-    failed_file_path = os.path.abspath(os.path.join(directory, 'Failed rename files.txt'))
+    failed_file_path = os.path.abspath(os.path.join(directory, 'Renamed files.txt'))
     rename_files(directory, extension.lower(), failed_file_path)
