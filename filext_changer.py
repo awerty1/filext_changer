@@ -14,11 +14,11 @@ def get_valid_extension():
     # Loop until a valid extension is entered
     valid_extension = ('.!ut', '.part')
     while True:
-        extension = input("Введите тип расширения (например, .!ut или .part): ")
+        extension = input("Enter the file extension type (e.g. .!ut or .part): ")
         if extension.lower() in valid_extension:
             return extension
         else:
-            print("Ошибка: расширение должно быть '.part' либо '.!ut'")
+            print("Error: the extension must be either '.part' or '.!ut'")
 
 
 '''
@@ -137,12 +137,12 @@ def rename_with_status_messages(failed_rename_files, success_rename_files, faile
 
 
 if __name__ == '__main__':
-    directory = input("Введите путь к директории: ")
     # directory = 'h:/CODE/Python/vogu project/File Extension/'
-    extension = get_valid_extension()
     # extension = '.!ut'
     # extension = '.part'
     # failed_file_path = input("Enter path to save failed file names: ")
     # failed_file_path = 'h:/CODE/Python/vogu project/File Extension/Failed rename files.txt'
+    directory = input("Enter path to directory: ")
+    extension = get_valid_extension()
     failed_file_path = os.path.abspath(os.path.join(directory, 'Renamed files.txt'))
     rename_files(directory, extension.lower(), failed_file_path)
