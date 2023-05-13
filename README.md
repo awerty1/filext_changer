@@ -9,6 +9,6 @@
 - [x] Saving success renaming and failed renaming attempts and date to file.
 - [ ] Removing extension .!ut || .part.
 - [ ] Adding extension {.N}
-- [x] Deleting files with extension .!ur || .part
+- [x] Deleting files with extension .!ut || .part
 
 
