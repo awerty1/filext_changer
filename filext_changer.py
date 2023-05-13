@@ -36,6 +36,7 @@ def rename_files(directory, extension, failed_file_path):
         counter = 0
         ##counter_minus = 0
         failed_rename_files = []
+        success_rename_files = []
         print("")
         for filename in os.listdir(directory):
             if not filename.endswith(extension):
@@ -48,20 +49,21 @@ def rename_files(directory, extension, failed_file_path):
 
             if os.path.exists(new_filename):
                 print(f"{counter + 1} \"{new_filename}\" - already exists, skipping")
-                #counter += 1
-                #counter_minus += 1
+                # counter += 1
+                # counter_minus += 1
                 failed_rename_files.append(filename)
             else:
                 os.rename(old_filename, new_filename)
                 print(f"{counter + 1} \"{filename}\" was renamed to \"{new_filename}\"")
+                success_rename_files.append(filename)
 
             counter += 1
 
-        #counter -= counter_minus
+        # counter -= counter_minus
         print(f"\nFile extension replacement completed successfully! {counter} files were renamed.")
 
         # Write filed files to a file
-        failed_renames_files(failed_rename_files)
+        failed_file_path = failed_success_renames_files(failed_rename_files, success_rename_files, failed_file_path)
         if len(failed_rename_files) == 1:
             print(f"{len(failed_rename_files)} file failed to rename, check {failed_file_path}")
         else:
@@ -83,42 +85,52 @@ The current date and message are also output to the file.
 '''
 
 
-def failed_renames_files(failed_rename_files):
-    # create a new file (Failed rename files(count).txt) if such a file is already contained in the directory
-    failed_file_path = os.path.abspath(os.path.join(directory, "Failed rename files.txt"))
+def failed_success_renames_files(failed_rename_files, success_rename_files, failed_file_path):
+    # create a new file (failed rename files(count).txt) if such a file is already contained in the directory
+    # failed_file_path = os.path.abspath(os.path.join(directory, "failed rename files.txt"))
     count = 1
     while os.path.exists(failed_file_path):
-        failed_file_path = os.path.abspath(os.path.join(directory, f"Failed rename files({count}).txt"))
+        failed_file_path = os.path.abspath(os.path.join(directory, f"failed rename files({count}).txt"))
         # failed_file_path = f"{directory}failed rename files({count}).txt"
         count += 1
 
-    # print(f"{failed_file_path}")
-
     now = datetime.now()
-    # Format date as string
+    # format date as string
     date_string = now.strftime("%Y-%m-%d %H:%M:%S")
 
-    if failed_rename_files:
-        # now = datetime.now()
-        # date_string = now.strftime("%Y-%m-%d %H:%M:%S")
-        with open(failed_file_path, "w") as f:
-            # Write date followed by new line
-            f.write("Current date " + date_string + "\n")
-            # Write list of failed files
+    # write list of "unsuccessful rename" of files
+    with open(failed_file_path, "w") as f:
+        # write date followed by new line
+        f.write("Current date " + date_string + "\n\n")
+
+        # write list of failed files
+        if failed_rename_files:
             f.write('\n###########################')
             f.write(f"\n# Unsuccessful renames {len(failed_rename_files)}: #")
             f.write('\n###########################\n\n')
-            # Add a number to each line of the list of failed renames
+            # add a number to each line of the list of failed renames
             for i, file in enumerate(failed_rename_files, start=1):
                 f.write(f"{i}. {file}\n")
-                # f.write("\n".join(failed_rename_files))
-    else:
-        with open(failed_file_path, "w") as f:
-            # Write date followed by new line
-            f.write("Current date " + date_string + "\n")
+        # write msg is all files rename successfully
+        elif success_rename_files and not failed_rename_files:
             f.write('\n##############################################')
             f.write('\n# Great job! All files renamed successfully! #')
             f.write('\n##############################################')
+        # write msg if directory is empty
+        else:
+            f.write('\n############################################')
+            f.write('\n# Directory is empty, no files were found! #')
+            f.write('\n############################################')
+
+        # write list of successfully renamed files
+        if success_rename_files:
+            f.write('\n\n#########################')
+            f.write(f"\n# Successful renames {len(success_rename_files)}: #")
+            f.write('\n#########################\n\n')
+            # add a number to each line of the list of successful renames
+            for i, file in enumerate(success_rename_files, start=1):
+                f.write(f"{i}. {file}\n")
+    return failed_file_path
 
 
 if __name__ == '__main__':
