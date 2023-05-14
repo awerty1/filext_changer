@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-#from termcolor import colored
+# from termcolor import colored
 from colorama import init, Fore
 
 # вызываем эту функцию, чтобы включить поддержку цветов в терминале
@@ -98,7 +98,7 @@ def rename_files(directory, extension, failed_file_path):
         failed_rename_files = []
         success_rename_files = []
         print("")
-        print(f"Изменение расширения происходит в каталоге \"{directory}\"")
+        print(f"Изменение расширения происходит в каталоге {Fore.CYAN}{directory}{Fore.RESET}")
         for filename in os.listdir(directory):
             if not filename.endswith(extension):
                 continue
@@ -123,17 +123,28 @@ def rename_files(directory, extension, failed_file_path):
             counter += 1
 
         counter -= count_without_failed
+
+        msg1_for_1 = f"\nFile extension replacement completed successfully! {counter} file were renamed."
+        msg2_for_any = f"\nFile extension replacement completed successfully! {counter} files were renamed."
+
         if counter == 1:
-            print(f"\nFile extension replacement completed successfully! {counter} file were renamed.")
+            print(msg1_for_1)
         else:
-            print(f"\nFile extension replacement completed successfully! {counter} files were renamed.")
+            print(msg2_for_any)
 
         # Write filed files to a file
         failed_file_path = rename_with_status_messages(failed_rename_files, success_rename_files, failed_file_path)
+
+        msg1_for_1 = f"{len(failed_rename_files)} file failed to rename, check {Fore.CYAN}" \
+                     f"{failed_file_path}{Fore.RESET}"
+        msg2_for_any = f"{len(failed_rename_files)} files failed to rename, check {Fore.CYAN}" \
+                       f"{failed_file_path}{Fore.RESET}"
+
         if len(failed_rename_files) == 1:
-            print(f"{len(failed_rename_files)} file failed to rename, check {Fore.CYAN}{failed_file_path}{Fore.RESET}")
+            print(msg1_for_1)
         else:
-            print(f"{len(failed_rename_files)} files failed to rename, check {Fore.CYAN}{failed_file_path}{Fore.RESET}")
+            print(msg2_for_any)
+
     except FileNotFoundError:
         print(f"Directory \"{directory}\" not found.")
     except OSError:
