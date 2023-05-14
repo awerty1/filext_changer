@@ -3,7 +3,7 @@ from datetime import datetime
 # from termcolor import colored
 from colorama import init, Fore, Style
 
-# вызываем эту функцию, чтобы включить поддержку цветов в терминале
+# We call this function to enable color support in the terminal.
 init()
 
 '''
@@ -53,7 +53,7 @@ Deletes all files with the given extension in the given directory
 
 def delete_file_with_extension(directory, extension, deleted_file_path):
     file_counter = 0
-    deleted_files = []
+    success_deleted_files = []
     failed_deleted_files = []
     try:
         print("")
@@ -63,7 +63,7 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                 filepath = os.path.join(directory, filename)
                 try:
                     os.remove(filepath)
-                    deleted_files.append(filename)
+                    success_deleted_files.append(filename)
                     print(f"{file_counter + 1}. File "
                           f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
                           f"was successfully deleted from {Fore.CYAN}{directory}{Fore.RESET}")
@@ -73,7 +73,7 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
 
                 file_counter += 1
 
-        deleted_files_count = len(deleted_files)
+        deleted_files_count = len(success_deleted_files)
         msg1_for_1 = f"\nDeleting files completed successfully! {deleted_files_count} file were deleted."
         msg2_for_any = f"\nDeleting files completed successfully! {deleted_files_count} files were deleted."
 
@@ -82,8 +82,8 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
         else:
             print(msg2_for_any)
 
-        # Write filed files to a file
-        # failed_file_path = rename_with_status_messages(failed_rename_files, success_rename_files, failed_file_path)
+        # Write status of deleted files to a file
+        deleted_file_path = create_deleted_files_log(failed_deleted_files, success_deleted_files, deleted_file_path)
 
         failed_deleted_files_count = len(failed_deleted_files)
         msg1_for_1 = f"{failed_deleted_files_count} file failed to delete, check {Fore.CYAN}" \
@@ -102,7 +102,64 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
     except Exception as e:
         print(f"An error occurred while deleting files: "
               f"{Fore.LIGHTRED_EX}{str(e)}{Fore.RESET}")
-        return deleted_files, failed_deleted_files
+
+
+'''
+Function for logging
+
+#variables:
+*failed_deleted_files -
+*success_deleted_files -
+*deleted_file_path -
+'''
+
+
+def create_deleted_files_log(failed_deleted_files, success_deleted_files, deleted_file_path):
+    # create a new file (failed deleted files(count).txt) if such a file is already contained in the directory
+    count = 1
+    while os.path.exists(deleted_file_path):
+        count += 1
+        deleted_file_path = os.path.abspath(os.path.join(directory, f"Deleted files({count}).txt"))
+
+    now = datetime.now()
+    # format date as string e.g. "Sat 2023-05-13 17:12:36 PM"
+    date_string = now.strftime("%a %Y-%m-%d %H:%M:%S %p %Z")
+
+    # write list of "unsuccessful deleted" of files
+    with open(deleted_file_path, "w") as f:
+        # write date followed by new line
+        f.write("Current date: " + date_string + "\n")
+        # write current directory
+        f.write("Current directory: " + os.path.dirname(deleted_file_path) + "\n\n")
+
+        # write list of failed deleted files
+        if failed_deleted_files:
+            f.write('\n###########################')
+            f.write(f"\n# Unsuccessful deleted {len(failed_deleted_files)}: #")
+            f.write('\n###########################\n\n')
+            # add a number to each line of the list of failed deleted
+            for i, file in enumerate(failed_deleted_files, start=1):
+                f.write(f"{i}. {file}\n")
+        # write msg is all files deleted successfully
+        elif success_deleted_files and not failed_deleted_files:
+            f.write('\n##############################################')
+            f.write('\n# Great job! All files deleted successfully! #')
+            f.write('\n##############################################')
+        # write msg if extension does not found in directory
+        else:
+            f.write('\n#######################################')
+            f.write('\n# Files not found, no such extension! #')
+            f.write('\n#######################################')
+
+        # write list of successfully deleted files
+        if success_deleted_files:
+            f.write('\n\n#########################')
+            f.write(f"\n# Successful deleted {len(success_deleted_files)}: #")
+            f.write('\n#########################\n\n')
+            # add a number to each line of the list of successful deleted
+            for i, file in enumerate(success_deleted_files, start=1):
+                f.write(f"{i}. {file}\n")
+    return deleted_file_path
 
 
 '''
@@ -179,7 +236,7 @@ def rename_files(directory, extension, failed_file_path):
             print(msg2_for_any)
 
         # Write filed files to a file
-        failed_file_path = rename_with_status_messages(failed_rename_files, success_rename_files, failed_file_path)
+        failed_file_path = create_rename_file_log(failed_rename_files, success_rename_files, failed_file_path)
 
         failed_rename_files_count = len(failed_rename_files)
         msg1_for_1 = f"{failed_rename_files_count} file failed to rename, check {Fore.CYAN}" \
@@ -212,7 +269,7 @@ The current date and message are also output to the file.
 '''
 
 
-def rename_with_status_messages(failed_rename_files, success_rename_files, failed_file_path):
+def create_rename_file_log(failed_rename_files, success_rename_files, failed_file_path):
     # create a new file (failed rename files(count).txt) if such a file is already contained in the directory
     count = 1
     while os.path.exists(failed_file_path):
@@ -226,7 +283,9 @@ def rename_with_status_messages(failed_rename_files, success_rename_files, faile
     # write list of "unsuccessful rename" of files
     with open(failed_file_path, "w") as f:
         # write date followed by new line
-        f.write("Current date " + date_string + "\n\n")
+        f.write("Current date: " + date_string + "\n")
+        # write current directory
+        f.write("Current directory: " + os.path.dirname(failed_file_path) + "\n\n")
 
         # write list of failed files
         if failed_rename_files:
@@ -241,11 +300,11 @@ def rename_with_status_messages(failed_rename_files, success_rename_files, faile
             f.write('\n##############################################')
             f.write('\n# Great job! All files renamed successfully! #')
             f.write('\n##############################################')
-        # write msg if directory is empty
+        # write msg if extension does not found in directory
         else:
-            f.write('\n############################################')
-            f.write('\n# Directory is empty, no files were found! #')
-            f.write('\n############################################')
+            f.write('\n#######################################')
+            f.write('\n# Files not found, no such extension! #')
+            f.write('\n#######################################')
 
         # write list of successfully renamed files
         if success_rename_files:
