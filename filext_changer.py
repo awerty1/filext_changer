@@ -3,6 +3,8 @@ from datetime import datetime
 
 '''
 Function to choose action
+
+#variables:
 '''
 
 
@@ -20,22 +22,35 @@ def choose_action():
 
 '''
 Function to perform action
+
+#variables:
 '''
+
+
 def perform_action(directory, extension, failed_file_path, action):
     if action == 1:
         rename_files(directory, extension.lower(), failed_file_path)
     elif action == 2:
         delete_file_with_extension(directory, extension)
 
+
 '''
 Function to deleting extension
 Deletes all files with the given extension in the given directory
+
+#variables:
 '''
+
+
 def delete_file_with_extension(directory, extension):
+    counter = 0
+    deleted_files = []
     for filename in os.listdir(directory):
         if filename.endswith(extension):
             os.remove(os.path.join(directory, filename))
-            print(f"Файл \"{filename}\" успешно удален из директории {directory}")
+            deleted_files.append(filename)
+            print(f"{counter + 1}. Файл \"{filename}\" успешно удален из директории {directory}")
+            counter += 1
 
 
 '''
@@ -77,6 +92,7 @@ def rename_files(directory, extension, failed_file_path):
         failed_rename_files = []
         success_rename_files = []
         print("")
+        print(f"Изменение расширения происходит в каталоге \"{directory}\"")
         for filename in os.listdir(directory):
             if not filename.endswith(extension):
                 continue
@@ -85,13 +101,14 @@ def rename_files(directory, extension, failed_file_path):
             root, _ = os.path.splitext(old_filename)
             new_extension = '.part' if extension == '.!ut' else '.!ut'
             new_filename = root + new_extension
+            new_filename_basename = os.path.basename(new_filename)
 
             if os.path.exists(new_filename):
                 print(f"{counter + 1} \"{new_filename}\" - already exists, skipping")
                 failed_rename_files.append(filename)
             else:
                 os.rename(old_filename, new_filename)
-                print(f"{counter + 1} \"{filename}\" was renamed to \"{new_filename}\"")
+                print(f"{counter + 1} \"{filename}\" was renamed to \"{new_filename_basename}\"")
                 success_rename_files.append(filename)
 
             counter += 1
@@ -133,7 +150,6 @@ def rename_with_status_messages(failed_rename_files, success_rename_files, faile
     while os.path.exists(failed_file_path):
         count += 1
         failed_file_path = os.path.abspath(os.path.join(directory, f"Renamed files({count}).txt"))
-
 
     now = datetime.now()
     # format date as string e.g. "Sat 2023-05-13 17:12:36 PM"
@@ -185,4 +201,4 @@ if __name__ == '__main__':
     failed_file_path = os.path.abspath(os.path.join(directory, 'Renamed files.txt'))
     action = choose_action()
     perform_action(directory, extension, failed_file_path, action)
-    #rename_files(directory, extension.lower(), failed_file_path)
+    # rename_files(directory, extension.lower(), failed_file_path)
