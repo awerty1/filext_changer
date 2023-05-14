@@ -142,7 +142,7 @@ def rename_files(directory, extension, failed_file_path):
         failed_rename_files = []
         success_rename_files = []
         print("")
-        print(f"Изменение расширения происходит в каталоге {Fore.CYAN}{directory}{Fore.RESET}")
+        print(f"The extension change occurs in the directory {Fore.CYAN}{directory}{Fore.RESET}")
         for filename in os.listdir(directory):
             if not filename.endswith(extension):
                 continue
