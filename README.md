@@ -6,8 +6,8 @@ It also allows you to delete files of a certain extension.
 
 ## Libraries:
 1. os (for os functions)
-2. datetime (for time)
-3. colorama (for color)
+2. datetime (for time functions)
+3. colorama (for color functions)
 
 ## Feature List:
 - [x] Change file extension .!ut to .part and vice versa.
