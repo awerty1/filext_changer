@@ -235,13 +235,11 @@ def rename_files(directory, extension, failed_file_path):
             if os.path.exists(new_filename):
                 print(f"{counter + 1} {Fore.LIGHTRED_EX}{new_filename}{Fore.RESET} "
                       f"- already exists, skipping")
-                #failed_rename_files.append(filename)
                 failed_rename_files[filename] = file_size
             else:
                 os.rename(old_filename, new_filename)
                 print(f"{counter + 1} {Fore.WHITE}{filename}{Fore.RESET} was renamed to "
                       f"{Fore.LIGHTGREEN_EX}{new_filename_basename}{Fore.RESET}")
-                #success_rename_files.append(filename)
                 success_rename_files[filename] = file_size
 
             counter += 1
