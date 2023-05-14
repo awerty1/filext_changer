@@ -53,22 +53,23 @@ Deletes all files with the given extension in the given directory
 
 def delete_file_with_extension(directory, extension, deleted_file_path):
     file_counter = 0
-    success_deleted_files = []
-    failed_deleted_files = []
+    success_deleted_files = {}
+    failed_deleted_files = {}
     try:
         print("")
         print(f"The extension change occurs in the directory {Fore.CYAN}{directory}{Fore.RESET}")
         for filename in os.listdir(directory):
             if filename.endswith(extension):
                 filepath = os.path.join(directory, filename)
+                file_size = os.path.getsize(filepath)
                 try:
                     os.remove(filepath)
-                    success_deleted_files.append(filename)
+                    success_deleted_files[filename] = file_size
                     print(f"{file_counter + 1}. File "
                           f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
                           f"was successfully deleted from {Fore.CYAN}{directory}{Fore.RESET}")
                 except:
-                    failed_deleted_files.append(filename)
+                    failed_deleted_files[filename] = file_size
                     print(f"{file_counter + 1}. Failed to deleted file {Fore.LIGHTRED_EX}{filename}{Fore.RESET}")
 
                 file_counter += 1
@@ -138,8 +139,9 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
             f.write(f"\n# Unsuccessful deleted {len(failed_deleted_files)}: #")
             f.write('\n###########################\n\n')
             # add a number to each line of the list of failed deleted
-            for i, file in enumerate(failed_deleted_files, start=1):
-                f.write(f"{i}. {file}\n")
+            for i, (file, file_size) in enumerate(failed_deleted_files.items(), start=1):
+                file_label = format_size(file_size)
+                f.write(f"{i}. {file} {file_label}\n")
         # write msg is all files deleted successfully
         elif success_deleted_files and not failed_deleted_files:
             f.write('\n##############################################')
@@ -157,9 +159,26 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
             f.write(f"\n# Successful deleted {len(success_deleted_files)}: #")
             f.write('\n#########################\n\n')
             # add a number to each line of the list of successful deleted
-            for i, file in enumerate(success_deleted_files, start=1):
-                f.write(f"{i}. {file}\n")
+            for i, (file, file_size) in enumerate(success_deleted_files.items(), start=1):
+                file_label = format_size(file_size)
+                f.write(f"{i}. {file} {file_label}\n")
     return deleted_file_path
+
+
+'''
+Function calculates the file size in the appropriate units
+
+#variables
+*size - bytes, kb, mb, gb, tb
+'''
+
+
+def format_size(size):
+    for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+        if size < 1024.0:
+            return f"{size:.2f} {x}"
+        size /= 1024.0
+    return f"{size:.2f} PB"
 
 
 '''
@@ -198,8 +217,8 @@ A function that renames the extension ".! ut" to ".part" or vice versa.
 def rename_files(directory, extension, failed_file_path):
     try:
         counter = 0
-        failed_rename_files = []
-        success_rename_files = []
+        failed_rename_files = {}
+        success_rename_files = {}
         print("")
         print(f"The extension change occurs in the directory {Fore.CYAN}{directory}{Fore.RESET}")
         for filename in os.listdir(directory):
@@ -211,16 +230,19 @@ def rename_files(directory, extension, failed_file_path):
             new_extension = '.part' if extension == '.!ut' else '.!ut'
             new_filename = root + new_extension
             new_filename_basename = os.path.basename(new_filename)
+            file_size = os.path.getsize(old_filename)
 
             if os.path.exists(new_filename):
                 print(f"{counter + 1} {Fore.LIGHTRED_EX}{new_filename}{Fore.RESET} "
                       f"- already exists, skipping")
-                failed_rename_files.append(filename)
+                #failed_rename_files.append(filename)
+                failed_rename_files[filename] = file_size
             else:
                 os.rename(old_filename, new_filename)
                 print(f"{counter + 1} {Fore.WHITE}{filename}{Fore.RESET} was renamed to "
                       f"{Fore.LIGHTGREEN_EX}{new_filename_basename}{Fore.RESET}")
-                success_rename_files.append(filename)
+                #success_rename_files.append(filename)
+                success_rename_files[filename] = file_size
 
             counter += 1
 
@@ -293,8 +315,9 @@ def create_rename_file_log(failed_rename_files, success_rename_files, failed_fil
             f.write(f"\n# Unsuccessful renames {len(failed_rename_files)}: #")
             f.write('\n###########################\n\n')
             # add a number to each line of the list of failed renames
-            for i, file in enumerate(failed_rename_files, start=1):
-                f.write(f"{i}. {file}\n")
+            for i, (file, file_size) in enumerate(failed_rename_files.items(), start=1):
+                file_label = format_size(file_size)
+                f.write(f"{i}. {file} {file_label}\n")
         # write msg is all files rename successfully
         elif success_rename_files and not failed_rename_files:
             f.write('\n##############################################')
@@ -312,8 +335,9 @@ def create_rename_file_log(failed_rename_files, success_rename_files, failed_fil
             f.write(f"\n# Successful renames {len(success_rename_files)}: #")
             f.write('\n#########################\n\n')
             # add a number to each line of the list of successful renames
-            for i, file in enumerate(success_rename_files, start=1):
-                f.write(f"{i}. {file}\n")
+            for i, (file, file_size) in enumerate(success_rename_files.items(), start=1):
+                file_label = format_size(file_size)
+                f.write(f"{i}. {file} {file_label}\n")
     return failed_file_path
 
 
