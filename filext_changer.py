@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 # from termcolor import colored
-from colorama import init, Fore
+from colorama import init, Fore, Style
 
 # вызываем эту функцию, чтобы включить поддержку цветов в терминале
 init()
@@ -32,11 +32,12 @@ Function to perform action
 '''
 
 
-def perform_action(directory, extension, failed_file_path, action):
+def perform_action(directory, extension, failed_file_path, deleted_file_path, action):
+    lower_extension = extension.lower()
     if action == 1:
-        rename_files(directory, extension.lower(), failed_file_path)
+        rename_files(directory, lower_extension, failed_file_path)
     elif action == 2:
-        delete_file_with_extension(directory, extension)
+        delete_file_with_extension(directory, lower_extension, deleted_file_path)
 
 
 '''
@@ -44,18 +45,62 @@ Function to deleting extension
 Deletes all files with the given extension in the given directory
 
 #variables:
+*directory - the directory to search for files
+*extension - the file extension to delete (e.g., ".txt")
+*return - a list of deleted filenames
 '''
 
 
-def delete_file_with_extension(directory, extension):
-    counter = 0
+def delete_file_with_extension(directory, extension, deleted_file_path):
+    file_counter = 0
     deleted_files = []
-    for filename in os.listdir(directory):
-        if filename.endswith(extension):
-            os.remove(os.path.join(directory, filename))
-            deleted_files.append(filename)
-            print(f"{counter + 1}. Файл \"{filename}\" успешно удален из директории {directory}")
-            counter += 1
+    failed_deleted_files = []
+    try:
+        for filename in os.listdir(directory):
+            if filename.endswith(extension):
+                filepath = os.path.join(directory, filename)
+                try:
+                    os.remove(filepath)
+                    deleted_files.append(filename)
+                    print(f"{file_counter + 1}. File "
+                          f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
+                          f"was successfully deleted from {Fore.CYAN}{directory}{Fore.RESET}")
+                except:
+                    failed_deleted_files.append(filename)
+                    print(f"{file_counter + 1}. Failed to deleted file {Fore.LIGHTRED_EX}{filename}{Fore.RESET}")
+
+                file_counter += 1
+
+        deleted_files_count = len(deleted_files)
+        msg1_for_1 = f"\nDeleting files completed successfully! {deleted_files_count} file were deleted."
+        msg2_for_any = f"\nDeleting files completed successfully! {deleted_files_count} files were deleted."
+
+        if deleted_files_count == 1:
+            print(msg1_for_1)
+        else:
+            print(msg2_for_any)
+
+        # Write filed files to a file
+        # failed_file_path = rename_with_status_messages(failed_rename_files, success_rename_files, failed_file_path)
+
+        failed_deleted_files_count = len(failed_deleted_files)
+        msg1_for_1 = f"{failed_deleted_files_count} file failed to delete, check {Fore.CYAN}" \
+                     f"{deleted_file_path}{Fore.RESET}"
+        msg2_for_any = f"{failed_deleted_files_count} files failed to delete, check {Fore.CYAN}" \
+                       f"{deleted_file_path}{Fore.RESET}"
+
+        if failed_deleted_files_count == 1:
+            print(msg1_for_1)
+        else:
+            print(msg2_for_any)
+
+    except FileNotFoundError:
+        print(f"Directory {Fore.CYAN}{directory}{Fore.RESET} "
+              f"does not exist")
+    except Exception as e:
+        print(f"An error occurred while deleting files: "
+              f"{Fore.LIGHTRED_EX}{str(e)}{Fore.RESET}")
+        return deleted_files, failed_deleted_files
 
 
 '''
@@ -94,7 +139,6 @@ A function that renames the extension ".! ut" to ".part" or vice versa.
 def rename_files(directory, extension, failed_file_path):
     try:
         counter = 0
-        count_without_failed = 0
         failed_rename_files = []
         success_rename_files = []
         print("")
@@ -113,7 +157,6 @@ def rename_files(directory, extension, failed_file_path):
                 print(f"{counter + 1} {Fore.LIGHTRED_EX}{new_filename}{Fore.RESET} "
                       f"- already exists, skipping")
                 failed_rename_files.append(filename)
-                count_without_failed += 1
             else:
                 os.rename(old_filename, new_filename)
                 print(f"{counter + 1} {Fore.WHITE}{filename}{Fore.RESET} was renamed to "
@@ -122,12 +165,13 @@ def rename_files(directory, extension, failed_file_path):
 
             counter += 1
 
-        counter -= count_without_failed
+        success_rename_files_count = len(success_rename_files)
+        msg1_for_1 = f"\nFile extension replacement completed successfully!" \
+                     f" {success_rename_files_count} file were renamed."
+        msg2_for_any = f"\nFile extension replacement completed successfully!" \
+                       f" {success_rename_files_count} files were renamed."
 
-        msg1_for_1 = f"\nFile extension replacement completed successfully! {counter} file were renamed."
-        msg2_for_any = f"\nFile extension replacement completed successfully! {counter} files were renamed."
-
-        if counter == 1:
+        if success_rename_files_count == 1:
             print(msg1_for_1)
         else:
             print(msg2_for_any)
@@ -135,12 +179,13 @@ def rename_files(directory, extension, failed_file_path):
         # Write filed files to a file
         failed_file_path = rename_with_status_messages(failed_rename_files, success_rename_files, failed_file_path)
 
-        msg1_for_1 = f"{len(failed_rename_files)} file failed to rename, check {Fore.CYAN}" \
+        failed_rename_files_count = len(failed_rename_files)
+        msg1_for_1 = f"{failed_rename_files_count} file failed to rename, check {Fore.CYAN}" \
                      f"{failed_file_path}{Fore.RESET}"
-        msg2_for_any = f"{len(failed_rename_files)} files failed to rename, check {Fore.CYAN}" \
+        msg2_for_any = f"{failed_rename_files_count} files failed to rename, check {Fore.CYAN}" \
                        f"{failed_file_path}{Fore.RESET}"
 
-        if len(failed_rename_files) == 1:
+        if failed_rename_files_count == 1:
             print(msg1_for_1)
         else:
             print(msg2_for_any)
@@ -220,6 +265,7 @@ if __name__ == '__main__':
     directory = input("Enter path to directory: ")
     extension = get_valid_extension()
     failed_file_path = os.path.abspath(os.path.join(directory, 'Renamed files.txt'))
+    deleted_file_path = os.path.abspath(os.path.join(directory, 'Deleted files.txt'))
     action = choose_action()
-    perform_action(directory, extension, failed_file_path, action)
+    perform_action(directory, extension, failed_file_path, deleted_file_path, action)
     # rename_files(directory, extension.lower(), failed_file_path)
