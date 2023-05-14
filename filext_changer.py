@@ -15,7 +15,7 @@ Function to choose action
 
 def choose_action():
     while True:
-        print("Select an action to perform:")
+        print(f"{Fore.LIGHTYELLOW_EX}Select an action to perform:{Fore.RESET}")
         print("1. Rename files with a specific extension")
         print("2. Delete files with a specific extension")
         action = int(input("Enter selection (1 or 2): "))
