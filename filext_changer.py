@@ -56,6 +56,8 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
     deleted_files = []
     failed_deleted_files = []
     try:
+        print("")
+        print(f"The extension change occurs in the directory {Fore.CYAN}{directory}{Fore.RESET}")
         for filename in os.listdir(directory):
             if filename.endswith(extension):
                 filepath = os.path.join(directory, filename)
