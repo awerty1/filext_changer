@@ -45,7 +45,7 @@ filling from console
 
 
 def main():
-    directory = input("Enter path to directory: ")
+    directory = choose_action.enter_directory()
     extension = choose_action.get_valid_extension()
     create_files_test.create_files(directory, extension)
     failed_file_path = os.path.abspath(os.path.join(directory, 'Renamed files.txt'))

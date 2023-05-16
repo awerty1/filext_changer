@@ -1,6 +1,27 @@
 import delete_files
 import rename_files
+import os
 from colorama import init, Fore, Style
+
+'''
+enter the directory
+'''
+
+
+def enter_directory():
+    while True:
+        directory = input("Введите путь к директории: ")
+        try:
+            if not os.path.exists(directory):
+                raise ValueError("Введенный путь не существует.")
+            elif not os.path.isdir(directory):
+                raise ValueError("Введенный путь не является директорией.")
+        except ValueError as error:
+            print(error)
+        else:
+            return directory
+
+
 
 '''
 Function to choose action
