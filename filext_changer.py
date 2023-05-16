@@ -18,6 +18,7 @@ def choose_action():
         print(f"{Fore.LIGHTYELLOW_EX}Select an action to perform:{Fore.RESET}")
         print("1. Rename files with a specific extension")
         print("2. Delete files with a specific extension")
+
         action = int(input("Enter selection (1 or 2): "))
         if action == 1 or action == 2:
             return action
@@ -59,6 +60,7 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
         print("")
         print(f"The extension change occurs in the directory "
               f"{Fore.CYAN}{directory}{Fore.RESET}")
+
         for filename in os.listdir(directory):
             if filename.endswith(extension):
                 filepath = os.path.join(directory, filename)
@@ -68,7 +70,8 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                     success_deleted_files[filename] = file_size
                     print(f"{file_counter + 1}. File "
                           f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
-                          f"was successfully deleted from {Fore.CYAN}{directory}{Fore.RESET}")
+                          f"was successfully deleted from "
+                          f"{Fore.CYAN}{directory}{Fore.RESET}")
                 except OSError:
                     failed_deleted_files[filename] = file_size
                     print(f"{file_counter + 1}. Failed to deleted file "
@@ -91,9 +94,11 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
         deleted_file_path = create_deleted_files_log(failed_deleted_files, success_deleted_files, deleted_file_path)
 
         failed_deleted_files_count = len(failed_deleted_files)
-        msg1_for_1 = f"{failed_deleted_files_count} file failed to delete, check " \
+        msg1_for_1 = f"{failed_deleted_files_count} " \
+                     f"file failed to delete, check " \
                      f"{Fore.CYAN}{deleted_file_path}{Fore.RESET}"
-        msg2_for_any = f"{failed_deleted_files_count} files failed to delete, check " \
+        msg2_for_any = f"{failed_deleted_files_count} " \
+                       f"files failed to delete, check " \
                        f"{Fore.CYAN}{deleted_file_path}{Fore.RESET}"
 
         if failed_deleted_files_count == 1:
@@ -235,7 +240,9 @@ def rename_files(directory, extension, failed_file_path):
         failed_rename_files = {}
         success_rename_files = {}
         print("")
-        print(f"The extension change occurs in the directory {Fore.CYAN}{directory}{Fore.RESET}")
+        print(f"The extension change occurs in the directory "
+              f"{Fore.CYAN}{directory}{Fore.RESET}")
+
         for filename in os.listdir(directory):
             if not filename.endswith(extension):
                 continue
@@ -253,7 +260,8 @@ def rename_files(directory, extension, failed_file_path):
                 failed_rename_files[filename] = file_size
             else:
                 os.rename(old_filename, new_filename)
-                print(f"{counter + 1} {Fore.WHITE}{filename}{Fore.RESET} was renamed to "
+                print(f"{counter + 1} {Fore.WHITE}{filename}{Fore.RESET} "
+                      f"was renamed to "
                       f"{Fore.LIGHTGREEN_EX}{new_filename_basename}{Fore.RESET}")
                 success_rename_files[filename] = file_size
 
@@ -285,9 +293,9 @@ def rename_files(directory, extension, failed_file_path):
             print(msg2_for_any)
 
     except FileNotFoundError:
-        print(f"Directory \"{directory}\" not found.")
+        print(f"Directory {Fore.CYAN}{directory}{Fore.CYAN} not found.")
     except OSError:
-        print(f"Cannot access directory \"{directory}\".")
+        print(f"Cannot access directory {Fore.CYAN}{directory}{Fore.CYAN}.")
 
 
 '''
