@@ -68,7 +68,7 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                     print(f"{file_counter + 1}. File "
                           f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
                           f"was successfully deleted from {Fore.CYAN}{directory}{Fore.RESET}")
-                except:
+                except OSError:
                     failed_deleted_files[filename] = file_size
                     print(f"{file_counter + 1}. Failed to deleted file {Fore.LIGHTRED_EX}{filename}{Fore.RESET}")
 
@@ -87,10 +87,10 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
         deleted_file_path = create_deleted_files_log(failed_deleted_files, success_deleted_files, deleted_file_path)
 
         failed_deleted_files_count = len(failed_deleted_files)
-        msg1_for_1 = f"{failed_deleted_files_count} file failed to delete, check {Fore.CYAN}" \
-                     f"{deleted_file_path}{Fore.RESET}"
-        msg2_for_any = f"{failed_deleted_files_count} files failed to delete, check {Fore.CYAN}" \
-                       f"{deleted_file_path}{Fore.RESET}"
+        msg1_for_1 = f"{failed_deleted_files_count} file failed to delete, check " \
+                     f"{Fore.CYAN}{deleted_file_path}{Fore.RESET}"
+        msg2_for_any = f"{failed_deleted_files_count} files failed to delete, check " \
+                       f"{Fore.CYAN}{deleted_file_path}{Fore.RESET}"
 
         if failed_deleted_files_count == 1:
             print(msg1_for_1)
@@ -120,18 +120,28 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
     count = 1
     while os.path.exists(deleted_file_path):
         count += 1
-        deleted_file_path = os.path.abspath(os.path.join(directory, f"Deleted files({count}).txt"))
+        deleted_file_path = os.path.abspath(os.path.join(os.path.dirname(deleted_file_path),
+                                                         f"Deleted files({count}).txt"))
 
     now = datetime.now()
     # format date as string e.g. "Sat 2023-05-13 17:12:36 PM"
     date_string = now.strftime("%a %Y-%m-%d %H:%M:%S %p %Z")
+    # total size of deleted files
+    total_size = sum(success_deleted_files.values())
+    total_size = format_size(total_size)
 
     # write list of "unsuccessful deleted" of files
     with open(deleted_file_path, "w") as f:
         # write date followed by new line
         f.write("Current date: " + date_string + "\n")
         # write current directory
-        f.write("Current directory: " + os.path.dirname(deleted_file_path) + "\n\n")
+        f.write("Current directory: " + os.path.dirname(deleted_file_path) + "\n")
+        # count of all deleted files
+        f.write(f"Total deleted files: {len(success_deleted_files)}\n")
+        # count of failed deleted files
+        f.write(f"Total failed deleted files: {len(failed_deleted_files)}\n")
+        # total size of deleted files
+        f.write(f"Total size of deleted files: {total_size}\n\n")
 
         # write list of failed deleted files
         if failed_deleted_files:
@@ -141,7 +151,7 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
             # add a number to each line of the list of failed deleted
             for i, (file, file_size) in enumerate(failed_deleted_files.items(), start=1):
                 file_label = format_size(file_size)
-                f.write(f"{i}. {file} {file_label}\n")
+                f.write(f"{i}. {file}  {file_label}\n")
         # write msg is all files deleted successfully
         elif success_deleted_files and not failed_deleted_files:
             f.write('\n##############################################')
@@ -161,7 +171,7 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
             # add a number to each line of the list of successful deleted
             for i, (file, file_size) in enumerate(success_deleted_files.items(), start=1):
                 file_label = format_size(file_size)
-                f.write(f"{i}. {file} {file_label}\n")
+                f.write(f"{i}. {file}  {file_label}\n")
     return deleted_file_path
 
 
@@ -174,9 +184,9 @@ Function calculates the file size in the appropriate units
 
 
 def format_size(size):
-    for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+    for unit in ['bytes', 'KB', 'MB', 'GB', 'TB']:
         if size < 1024.0:
-            return f"{size:.2f} {x}"
+            return f"{size:.2f} {unit}"
         size /= 1024.0
     return f"{size:.2f} PB"
 
@@ -259,10 +269,10 @@ def rename_files(directory, extension, failed_file_path):
         failed_file_path = create_rename_file_log(failed_rename_files, success_rename_files, failed_file_path)
 
         failed_rename_files_count = len(failed_rename_files)
-        msg1_for_1 = f"{failed_rename_files_count} file failed to rename, check {Fore.CYAN}" \
-                     f"{failed_file_path}{Fore.RESET}"
-        msg2_for_any = f"{failed_rename_files_count} files failed to rename, check {Fore.CYAN}" \
-                       f"{failed_file_path}{Fore.RESET}"
+        msg1_for_1 = f"{failed_rename_files_count} file failed to rename, check " \
+                     f"{Fore.CYAN}{failed_file_path}{Fore.RESET}"
+        msg2_for_any = f"{failed_rename_files_count} files failed to rename, check " \
+                       f"{Fore.CYAN}{failed_file_path}{Fore.RESET}"
 
         if failed_rename_files_count == 1:
             print(msg1_for_1)
@@ -294,18 +304,28 @@ def create_rename_file_log(failed_rename_files, success_rename_files, failed_fil
     count = 1
     while os.path.exists(failed_file_path):
         count += 1
-        failed_file_path = os.path.abspath(os.path.join(directory, f"Renamed files({count}).txt"))
+        failed_file_path = os.path.abspath(os.path.join(os.path.dirname(failed_file_path),
+                                                        f"Renamed files({count}).txt"))
 
     now = datetime.now()
     # format date as string e.g. "Sat 2023-05-13 17:12:36 PM"
     date_string = now.strftime("%a %Y-%m-%d %H:%M:%S %p %Z")
+    # size of success renamed
+    total_size = sum(success_rename_files.values())
+    total_size = format_size(total_size)
 
     # write list of "unsuccessful rename" of files
     with open(failed_file_path, "w") as f:
         # write date followed by new line
         f.write("Current date: " + date_string + "\n")
         # write current directory
-        f.write("Current directory: " + os.path.dirname(failed_file_path) + "\n\n")
+        f.write("Current directory: " + os.path.dirname(failed_file_path) + "\n")
+        # count of all deleted files
+        f.write(f"Total renamed files: {len(success_rename_files)}\n")
+        # count of failed deleted files
+        f.write(f"Total failed to renamed files: {len(failed_rename_files)}\n")
+        # total size of deleted files
+        f.write(f"Total size of renamed files: {total_size}\n\n")
 
         # write list of failed files
         if failed_rename_files:
@@ -315,7 +335,7 @@ def create_rename_file_log(failed_rename_files, success_rename_files, failed_fil
             # add a number to each line of the list of failed renames
             for i, (file, file_size) in enumerate(failed_rename_files.items(), start=1):
                 file_label = format_size(file_size)
-                f.write(f"{i}. {file} {file_label}\n")
+                f.write(f"{i}. {file}  {file_label}\n")
         # write msg is all files rename successfully
         elif success_rename_files and not failed_rename_files:
             f.write('\n##############################################')
@@ -335,10 +355,11 @@ def create_rename_file_log(failed_rename_files, success_rename_files, failed_fil
             # add a number to each line of the list of successful renames
             for i, (file, file_size) in enumerate(success_rename_files.items(), start=1):
                 file_label = format_size(file_size)
-                f.write(f"{i}. {file} {file_label}\n")
+                f.write(f"{i}. {file}  {file_label}\n")
     return failed_file_path
 
 
+'''
 if __name__ == '__main__':
     # directory = 'h:/CODE/Python/vogu project/File Extension/'
     # extension = '.!ut'
@@ -352,3 +373,4 @@ if __name__ == '__main__':
     action = choose_action()
     perform_action(directory, extension, failed_file_path, deleted_file_path, action)
     # rename_files(directory, extension.lower(), failed_file_path)
+'''
