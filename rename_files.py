@@ -5,7 +5,7 @@ from colorama import init, Fore, Style
 import choose_action
 
 # We call this function to enable color support in the terminal.
-#init()
+init()
 
 '''
 A function that renames the extension ".! ut" to ".part" or vice versa.
