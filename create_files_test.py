@@ -4,7 +4,7 @@ from colorama import Fore
 
 def create_files(directory):
     try:
-        # create directory if does not exist
+        # create directory if it does not exist
         os.makedirs(directory, exist_ok=True)
         filename_ut = ''
         filename_part = ''
@@ -12,9 +12,9 @@ def create_files(directory):
             try:
                 filename_ut = os.path.join(directory, f"file{file}.!ut")
                 filename_part = os.path.join(directory, f"file{file}.part")
-                # создаем пустой файл с расширением .txt
+                # create an empty file with .txt extension
                 open(filename_ut, 'w').close()
-                # создаем пустой файл с расширением .part
+                # create an empty file with .part extension
                 open(filename_part, 'w').close()
             except PermissionError:
                 print(f"Failed to create file "
@@ -25,13 +25,3 @@ def create_files(directory):
     except OSError:
         print(f"Failed to create directory "
               f"{Fore.CYAN}{directory}{Fore.RESET}.")
-
-    # with open(filename_txt, 'w'):
-    #     pass
-    #     # создаем пустой файл с расширением .part
-    # with open(filename_part, 'w'):
-    #     pass
-
-
-
-
