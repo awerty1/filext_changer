@@ -5,7 +5,7 @@ from colorama import Fore
 def create_files(directory):
     try:
         # create directory if it does not exist
-        os.makedirs(directory, exist_ok=True)
+        #os.makedirs(directory, exist_ok=True)
         filename_ut = ''
         filename_part = ''
         for file in range(1, 6):
