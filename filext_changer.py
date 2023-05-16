@@ -57,7 +57,8 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
     failed_deleted_files = {}
     try:
         print("")
-        print(f"The extension change occurs in the directory {Fore.CYAN}{directory}{Fore.RESET}")
+        print(f"The extension change occurs in the directory "
+              f"{Fore.CYAN}{directory}{Fore.RESET}")
         for filename in os.listdir(directory):
             if filename.endswith(extension):
                 filepath = os.path.join(directory, filename)
@@ -70,13 +71,16 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                           f"was successfully deleted from {Fore.CYAN}{directory}{Fore.RESET}")
                 except OSError:
                     failed_deleted_files[filename] = file_size
-                    print(f"{file_counter + 1}. Failed to deleted file {Fore.LIGHTRED_EX}{filename}{Fore.RESET}")
+                    print(f"{file_counter + 1}. Failed to deleted file "
+                          f"{Fore.LIGHTRED_EX}{filename}{Fore.RESET}")
 
                 file_counter += 1
 
         deleted_files_count = len(success_deleted_files)
-        msg1_for_1 = f"\nDeleting files completed successfully! {deleted_files_count} file were deleted."
-        msg2_for_any = f"\nDeleting files completed successfully! {deleted_files_count} files were deleted."
+        msg1_for_1 = f"\nDeleting files completed successfully! " \
+                     f"{deleted_files_count} file were deleted."
+        msg2_for_any = f"\nDeleting files completed successfully! " \
+                       f"{deleted_files_count} files were deleted."
 
         if deleted_files_count == 1:
             print(msg1_for_1)
@@ -116,7 +120,8 @@ Function for logging
 
 
 def create_deleted_files_log(failed_deleted_files, success_deleted_files, deleted_file_path):
-    # create a new file (failed deleted files(count).txt) if such a file is already contained in the directory
+    # create a new file (failed deleted files(count).txt)
+    # if such a file is already contained in the directory
     count = 1
     while os.path.exists(deleted_file_path):
         count += 1
