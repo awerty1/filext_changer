@@ -5,17 +5,20 @@ from colorama import init, Fore, Style
 
 '''
 enter the directory
+
+#variables:
+*directory - current directory
 '''
 
 
 def enter_directory():
     while True:
-        directory = input("Введите путь к директории: ")
+        directory = input("Enter path to directory: ")
         try:
             if not os.path.exists(directory):
-                raise ValueError("Введенный путь не существует.")
+                raise ValueError("The entered path does not exist.")
             elif not os.path.isdir(directory):
-                raise ValueError("Введенный путь не является директорией.")
+                raise ValueError("The entered path is not a directory.")
         except ValueError as error:
             print(error)
         else:
