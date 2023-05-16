@@ -5,7 +5,7 @@ from colorama import init, Fore, Style
 import choose_action
 
 # We call this function to enable color support in the terminal.
-init()
+#init()
 
 '''
 A function that renames the extension ".! ut" to ".part" or vice versa.
@@ -48,7 +48,7 @@ def rename_files(directory, extension, failed_file_path):
                 os.rename(old_filename, new_filename)
                 print(f"{counter + 1} {Fore.WHITE}{filename}{Fore.RESET} "
                       f"was renamed to "
-                      f"{Fore.LIGHTGREEN_EX}{new_filename_basename}{Fore.RESET}")
+                      f"{Fore.GREEN + Style.BRIGHT}{new_filename_basename}{Style.RESET_ALL}")
                 success_rename_files[filename] = file_size
 
             counter += 1

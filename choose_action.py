@@ -1,7 +1,7 @@
+import os
+from colorama import Fore
 import delete_files
 import rename_files
-import os
-from colorama import init, Fore, Style
 
 '''
 enter the directory
@@ -23,7 +23,6 @@ def enter_directory():
             print(error)
         else:
             return directory
-
 
 
 '''
