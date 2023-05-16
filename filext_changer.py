@@ -10,6 +10,7 @@ init()
 Function to choose action
 
 #variables:
+*action - to select Rename or Delete
 '''
 
 
@@ -30,6 +31,11 @@ def choose_action():
 Function to perform action
 
 #variables:
+*directory - current directory to delete the file
+*extension - picked file extension
+*failed_file_path - file path to rename files
+*deleted_file_path - file path for delete file
+*action - entered action
 '''
 
 
@@ -48,6 +54,7 @@ Deletes all files with the given extension in the given directory
 #variables:
 *directory - the directory to search for files
 *extension - the file extension to delete (e.g., ".txt")
+*deleted_file_path - file path for delete file
 *return - a list of deleted filenames
 '''
 
@@ -118,9 +125,9 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
 Function for logging
 
 #variables:
-*failed_deleted_files -
-*success_deleted_files -
-*deleted_file_path -
+*failed_deleted_files - file path for unsuccessfully renamed files
+*success_deleted_files - dictionary of successfully deleted files
+*deleted_file_path - file path for delete file
 '''
 
 
@@ -189,7 +196,7 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
 Function calculates the file size in the appropriate units
 
 #variables
-*size - bytes, kb, mb, gb, tb
+*size - size in bytes, kb, mb, gb, tb
 '''
 
 
@@ -206,6 +213,7 @@ Function to validate the input of the correct file extension.
 Accepts extensions '.!ut' || '.part'.
 
 #variables:
+*valid_extension - available extensions
 *extension - file extension (.!ut || .part)
 '''
 
