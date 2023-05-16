@@ -151,20 +151,3 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
                 file_label = choose_action.format_size(file_size)
                 f.write(f"{i}. {file}  {file_label}\n")
     return deleted_file_path
-
-
-'''
-if __name__ == '__main__':
-    # directory = 'h:/CODE/Python/vogu project/File Extension/'
-    # extension = '.!ut'
-    # extension = '.part'
-    # failed_file_path = input("Enter path to save failed file names: ")
-    # failed_file_path = 'h:/CODE/Python/vogu project/File Extension/Failed rename files.txt'
-    directory = input("Enter path to directory: ")
-    extension = get_valid_extension()
-    failed_file_path = os.path.abspath(os.path.join(directory, 'Renamed files.txt'))
-    deleted_file_path = os.path.abspath(os.path.join(directory, 'Deleted files.txt'))
-    action = choose_action()
-    perform_action(directory, extension, failed_file_path, deleted_file_path, action)
-    # rename_files(directory, extension.lower(), failed_file_path)
-'''
