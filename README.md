@@ -17,7 +17,7 @@ It also allows you to delete files of a certain extension.
 5. create_files_test.py - function for create files
 
 ## Measured time:
-1. Deletion of a million files occurs in 4 min
+1. Deletion of a million files occurs in 4 minutes
 2. Renaming a million files in 8 minutes
 
 ## Feature List:
