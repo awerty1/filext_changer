@@ -10,9 +10,11 @@ It also allows you to delete files of a certain extension.
 3. colorama (for color functions)
 
 ## Files of program
-1. main.py
-2. delete_files.py
-3. 
+1. main.py - main function
+2. choose_action.py - function for choose action
+3. delete_files.py - function for delete files
+4. rename_files.py - function for rename files
+5. create_files_test.py - function for create files
 
 ## Feature List:
 - [x] Change file extension .!ut to .part and vice versa.
