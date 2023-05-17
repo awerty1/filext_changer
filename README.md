@@ -9,6 +9,11 @@ It also allows you to delete files of a certain extension.
 2. datetime (for time functions)
 3. colorama (for color functions)
 
+## Files of program
+1. main.py
+2. delete_files.py
+3. 
+
 ## Feature List:
 - [x] Change file extension .!ut to .part and vice versa.
 - [x] Saving success renaming and failed renaming attempts and date to file.
