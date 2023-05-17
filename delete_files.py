@@ -1,8 +1,10 @@
 import os
+import time
 from datetime import datetime
 # from termcolor import colored
 from colorama import init, Fore, Style
 import choose_action
+
 
 # We call this function to enable color support in the terminal.
 #init()
@@ -21,6 +23,7 @@ Deletes all files with the given extension in the given directory
 
 
 def delete_file_with_extension(directory, extension, deleted_file_path):
+    start_time = time.time()
     file_counter = 0
     success_deleted_files = {}
     failed_deleted_files = {}
@@ -46,6 +49,9 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                           f"{Fore.LIGHTRED_EX}{filename}{Fore.RESET}")
 
                 file_counter += 1
+        # elapsed time
+        elapsed_time = time.time() - start_time
+        formatted_time = choose_action.format_elapsed_time(elapsed_time)
 
         deleted_files_count = len(success_deleted_files)
         msg1_for_1 = f"\nDeleting files completed successfully! " \
@@ -59,7 +65,8 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
             print(msg2_for_any)
 
         # Write status of deleted files to a file
-        deleted_file_path = create_deleted_files_log(failed_deleted_files, success_deleted_files, deleted_file_path)
+        deleted_file_path = create_deleted_files_log(failed_deleted_files, success_deleted_files,
+                                                     deleted_file_path, formatted_time)
 
         failed_deleted_files_count = len(failed_deleted_files)
         msg1_for_1 = f"{failed_deleted_files_count} " \
@@ -92,7 +99,7 @@ Function for logging
 '''
 
 
-def create_deleted_files_log(failed_deleted_files, success_deleted_files, deleted_file_path):
+def create_deleted_files_log(failed_deleted_files, success_deleted_files, deleted_file_path, elapsed_time):
     # create a new file (failed deleted files(count).txt)
     # if such a file is already contained in the directory
     count = 1
@@ -119,7 +126,9 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
         # count of failed deleted files
         f.write(f"Total failed deleted files: {len(failed_deleted_files)}\n")
         # total size of deleted files
-        f.write(f"Total size of deleted files: {total_size}\n\n")
+        f.write(f"Total size of deleted files: {total_size}\n")
+        # elapsed time
+        f.write(f"Elapsed time: {elapsed_time} ms.\n\n")
 
         # write list of failed deleted files
         if failed_deleted_files:

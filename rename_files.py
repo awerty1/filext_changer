@@ -1,4 +1,5 @@
 import os
+import time
 from datetime import datetime
 # from termcolor import colored
 from colorama import init, Fore, Style
@@ -21,6 +22,7 @@ A function that renames the extension ".! ut" to ".part" or vice versa.
 
 
 def rename_files(directory, extension, failed_file_path):
+    start_time = time.time()
     try:
         counter = 0
         failed_rename_files = {}
@@ -53,6 +55,10 @@ def rename_files(directory, extension, failed_file_path):
 
             counter += 1
 
+        # elapsed time
+        elapsed_time = time.time() - start_time
+        formatted_time = choose_action.format_elapsed_time(elapsed_time)
+
         success_rename_files_count = len(success_rename_files)
         msg1_for_1 = f"\nFile extension replacement completed successfully!" \
                      f" {success_rename_files_count} file were renamed."
@@ -65,7 +71,8 @@ def rename_files(directory, extension, failed_file_path):
             print(msg2_for_any)
 
         # Write filed files to a file
-        failed_file_path = create_rename_file_log(failed_rename_files, success_rename_files, failed_file_path)
+        failed_file_path = create_rename_file_log(failed_rename_files, success_rename_files,
+                                                  failed_file_path, formatted_time)
 
         failed_rename_files_count = len(failed_rename_files)
         msg1_for_1 = f"{failed_rename_files_count} file failed to rename, check " \
@@ -98,7 +105,7 @@ The current date and message are also output to the file.
 '''
 
 
-def create_rename_file_log(failed_rename_files, success_rename_files, failed_file_path):
+def create_rename_file_log(failed_rename_files, success_rename_files, failed_file_path, elapsed_time):
     # create a new file (failed rename files(count).txt) if such a file is already contained in the directory
     count = 1
     while os.path.exists(failed_file_path):
@@ -124,7 +131,9 @@ def create_rename_file_log(failed_rename_files, success_rename_files, failed_fil
         # count of failed deleted files
         f.write(f"Total failed to renamed files: {len(failed_rename_files)}\n")
         # total size of deleted files
-        f.write(f"Total size of renamed files: {total_size}\n\n")
+        f.write(f"Total size of renamed files: {total_size}\n")
+        # elapsed time
+        f.write(f"Elapsed time: {elapsed_time} ms.\n\n")
 
         # write list of failed files
         if failed_rename_files:

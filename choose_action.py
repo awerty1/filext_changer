@@ -101,3 +101,17 @@ def format_size(size):
             return f"{size:.2f} {unit}"
         size /= 1024.0
     return f"{size:.2f} PB"
+
+
+'''
+elapsed_time - elapsed time of function
+'''
+
+
+def format_elapsed_time(elapsed_time):
+    hours, remainder = divmod(elapsed_time, 3600)
+    minutes, remainder = divmod(remainder, 60)
+    seconds, milliseconds = divmod(remainder, 1)
+    milliseconds = int(milliseconds * 1000)
+    formatted_time = f"{hours:02.0f}:{minutes:02.0f}:{seconds:02.0f}.{milliseconds:03.0f}"
+    return formatted_time
