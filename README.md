@@ -15,6 +15,7 @@ It also allows you to delete files of a certain extension.
 3. delete_files.py - function for delete files
 4. rename_files.py - function for rename files
 5. create_files_test.py - function for create files
+6. test_choose_action.py - function for unit tests
 
 ## Measured time:
 1. Deletion of a million files occurs in 4 minutes
