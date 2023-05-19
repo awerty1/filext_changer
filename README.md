@@ -18,7 +18,7 @@ It also allows you to delete files of a certain extension.
 6. test_choose_action.py - function for unit tests
 
 ## Measured time:
-1. Deletion of a million files occurs in 4 min
+1. Deletion of a million files occurs in 4 minutes
 2. Renaming a million files in 8 minutes
 
 ## Feature List:
