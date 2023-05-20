@@ -24,7 +24,7 @@ Deletes all files with the given extension in the given directory
 
 def delete_file_with_extension(directory, extension, deleted_file_path):
     start_time = time.time()
-    file_counter = 0
+    file_counter = 1
     success_deleted_files = {}
     failed_deleted_files = {}
     try:
@@ -39,13 +39,13 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                 try:
                     os.remove(filepath)
                     success_deleted_files[filename] = file_size
-                    print(f"{file_counter + 1}. File "
+                    print(f"{file_counter}. File "
                           f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
                           f"was successfully deleted from "
                           f"{Fore.CYAN}{directory}{Fore.RESET}")
                 except OSError:
                     failed_deleted_files[filename] = file_size
-                    print(f"{file_counter + 1}. Failed to deleted file "
+                    print(f"{file_counter}. Failed to deleted file "
                           f"{Fore.LIGHTRED_EX}{filename}{Fore.RESET}")
 
                 file_counter += 1

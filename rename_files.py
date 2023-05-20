@@ -24,7 +24,7 @@ A function that renames the extension ".! ut" to ".part" or vice versa.
 def rename_files(directory, extension, failed_file_path):
     start_time = time.time()
     try:
-        counter = 0
+        file_counter = 1
         failed_rename_files = {}
         success_rename_files = {}
         print("")
@@ -43,17 +43,17 @@ def rename_files(directory, extension, failed_file_path):
             file_size = os.path.getsize(old_filename)
 
             if os.path.exists(new_filename):
-                print(f"{counter + 1} {Fore.LIGHTRED_EX}{new_filename}{Fore.RESET} "
+                print(f"{file_counter} {Fore.LIGHTRED_EX}{new_filename}{Fore.RESET} "
                       f"- already exists, skipping")
                 failed_rename_files[filename] = file_size
             else:
                 os.rename(old_filename, new_filename)
-                print(f"{counter + 1} {Fore.WHITE}{filename}{Fore.RESET} "
+                print(f"{file_counter} {Fore.WHITE}{filename}{Fore.RESET} "
                       f"was renamed to "
                       f"{Fore.GREEN + Style.BRIGHT}{new_filename_basename}{Style.RESET_ALL}")
                 success_rename_files[filename] = file_size
 
-            counter += 1
+            file_counter += 1
 
         # elapsed time
         elapsed_time = time.time() - start_time
