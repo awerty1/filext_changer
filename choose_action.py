@@ -38,9 +38,10 @@ def choose_action():
         print(f"{Fore.LIGHTYELLOW_EX}Select an action to perform:{Fore.RESET}")
         print("1. Rename files with a specific extension")
         print("2. Delete files with a specific extension")
+        print("3. Remove files extension from the file")
 
-        action = int(input("Enter selection (1 or 2): "))
-        if action == 1 or action == 2:
+        action = int(input("Enter selection (1 or 2 or 3): "))
+        if action == 1 or action == 2 or action == 3:
             return action
         else:
             print("Invalid input, please enter 1 or 2")
