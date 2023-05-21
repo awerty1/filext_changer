@@ -50,8 +50,9 @@ def main():
     create_files_test.create_files(directory, extension)
     failed_file_path = os.path.abspath(os.path.join(directory, 'Renamed files.txt'))
     deleted_file_path = os.path.abspath(os.path.join(directory, 'Deleted files.txt'))
+    remove_filext_path = os.path.abspath(os.path.join(directory, 'Removed extension from files.txt'))
     action = choose_action.choose_action()
-    choose_action.perform_action(directory, extension, failed_file_path, deleted_file_path, action)
+    choose_action.perform_action(directory, extension, failed_file_path, deleted_file_path, remove_filext_path, action)
 
 
 if __name__ == '__main__':

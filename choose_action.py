@@ -2,6 +2,7 @@ import os
 from colorama import Fore
 import delete_files
 import rename_files
+import remove_filext
 
 '''
 enter the directory
@@ -59,12 +60,14 @@ Function to perform action
 '''
 
 
-def perform_action(directory, extension, failed_file_path, deleted_file_path, action):
+def perform_action(directory, extension, failed_file_path, deleted_file_path, remove_filext_path, action):
     lower_extension = extension.lower()
     if action == 1:
         rename_files.rename_files(directory, lower_extension, failed_file_path)
     elif action == 2:
         delete_files.delete_file_with_extension(directory, lower_extension, deleted_file_path)
+    elif action == 3:
+        remove_filext.remove_file_extension(directory, lower_extension, remove_filext_path)
 
 
 '''
