@@ -40,13 +40,14 @@ def choose_action():
         print("1. Rename files with a specific extension")
         print("2. Delete files with a specific extension")
         print("3. Remove files extension from the file")
-
-        action = int(input("Enter selection (1 or 2 or 3): "))
-        if action == 1 or action == 2 or action == 3:
-            return action
-        else:
-            print("Invalid input, please enter 1 or 2")
-
+        try:
+            action = int(input("Enter selection (1 or 2 or 3): "))
+            if 1 <= action <= 3:
+                return action
+            else:
+                print("Invalid input, please enter 1 or 2 or 3")
+        except ValueError:
+            print("Invalid input, please enter a number 1 or 2 or 3")
 
 '''
 Function to perform action
