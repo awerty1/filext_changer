@@ -35,7 +35,7 @@ It also allows you to delete files of a certain extension.
 - Delete files with a specific extension
 ![Delete files example](https://github.com/awerty1/filext_changer/blob/4b87a486597fc8815d287d0d04eccfd14432ce6b/2023-05-14_17-38-46.png)
 - Remove files extensions from the directory
-![Remove file extension example]()
+![Remove file extension example](https://github.com/awerty1/filext_changer/blob/b2d15f3673f0c46980f1548f7077d3986155a786/img/2023-05-21_22-25-01.png)
 
 
 
