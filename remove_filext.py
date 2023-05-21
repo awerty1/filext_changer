@@ -21,7 +21,7 @@ def remove_file_extension(directory, extension_to_remove, remove_filext_path):
     success_remove_ext_frm_files = {}
     failed_remove_ext_frm_files = {}
     try:
-        print(f"\nRemove files extensions occurs in the directory "
+        print(f"\nRemove files extensions occurs in the directory: "
               f"{Fore.CYAN}{directory}{Fore.RESET}")
 
         # Iterate over all files in a directory
@@ -106,10 +106,11 @@ def create_remove_ext_frm_files_log(failed_remove_ext_frm_files, success_remove_
     # create a new file (failed deleted files(count).txt)
     # if such a file is already contained in the directory
     count = 1
+    name_of_file_without_extension = os.path.splitext(remove_filext_path)[0]
     while os.path.exists(remove_filext_path):
         count += 1
         remove_filext_path = os.path.abspath(os.path.join(os.path.dirname(remove_filext_path),
-                                                          f"Removed extension from files({count}).txt"))
+                                                          f"{name_of_file_without_extension}({count}).txt"))
     now = datetime.now()
     # format date as string e.g. "Sat 2023-05-13 17:12:36 PM"
     date_string = now.strftime("%a %Y-%m-%d %H:%M:%S %p %Z")

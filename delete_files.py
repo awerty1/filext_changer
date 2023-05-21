@@ -28,7 +28,7 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
     success_deleted_files = {}
     failed_deleted_files = {}
     try:
-        print(f"\nThe extension change occurs in the directory "
+        print(f"\nDeletion of files with the selected extension occurs in the directory: "
               f"{Fore.CYAN}{directory}{Fore.RESET}")
 
         for filename in os.listdir(directory):

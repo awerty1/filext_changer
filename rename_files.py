@@ -27,7 +27,7 @@ def rename_files(directory, extension, failed_file_path):
     failed_rename_files = {}
     success_rename_files = {}
     try:
-        print(f"\nThe extension change occurs in the directory "
+        print(f"\nThe extension change occurs in the directory: "
               f"{Fore.CYAN}{directory}{Fore.RESET}")
 
         for filename in os.listdir(directory):
