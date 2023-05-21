@@ -3,6 +3,7 @@ from colorama import Fore
 
 '''
 Function to automatically create files in a directory
+4testing
 
 #variables:
 *directory - for choose directory
@@ -29,3 +30,31 @@ def create_files(directory, extension):
     except OSError:
         print(f"Failed to create directory "
               f"{Fore.CYAN}{directory}{Fore.RESET}.")
+
+
+'''
+Function to delete files without extension
+4testing
+
+#variables:
+*directory - for choose directory
+'''
+
+
+def delete_files_without_extension(directory):
+    try:
+        # Get a list of files in a folder
+        files = os.listdir(directory)
+        # Go through all the files in a folder
+        for file in files:
+            # Check that it is a file without extension
+            if not os.path.splitext(file)[1]:
+                try:
+                    # Delete a file
+                    os.remove(os.path.join(directory, file))
+                except OSError as e:
+                    print(f"Error deleting {Fore.RED}{file}{Fore.RESET}: {e.strerror}")
+    except OSError as e:
+        # Display an error message in case of an error
+        print(f"Error reading directory {directory}: {e.strerror}")
+

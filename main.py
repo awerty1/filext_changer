@@ -48,6 +48,7 @@ def main():
     directory = choose_action.enter_directory()
     extension = choose_action.get_valid_extension()
     create_files_test.create_files(directory, extension)
+    create_files_test.delete_files_without_extension(directory)
     failed_file_path = os.path.abspath(os.path.join(directory, 'Renamed files.txt'))
     deleted_file_path = os.path.abspath(os.path.join(directory, 'Deleted files.txt'))
     remove_filext_path = os.path.abspath(os.path.join(directory, 'Removed extension from files.txt'))
