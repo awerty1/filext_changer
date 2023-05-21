@@ -102,10 +102,11 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
     # create a new file (failed deleted files(count).txt)
     # if such a file is already contained in the directory
     count = 1
+    name_of_deleted_file = os.path.splitext(deleted_file_path)[0]
     while os.path.exists(deleted_file_path):
         count += 1
         deleted_file_path = os.path.abspath(os.path.join(os.path.dirname(deleted_file_path),
-                                                         f"Deleted files({count}).txt"))
+                                                         f"{name_of_deleted_file}({count}).txt"))
 
     now = datetime.now()
     # format date as string e.g. "Sat 2023-05-13 17:12:36 PM"

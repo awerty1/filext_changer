@@ -42,13 +42,13 @@ def rename_files(directory, extension, failed_file_path):
             file_size = os.path.getsize(old_filename)
 
             if os.path.exists(new_filename):
-                print(f"{file_counter} {Fore.LIGHTRED_EX}{new_filename}{Fore.RESET} "
+                print(f"{file_counter}. {Fore.LIGHTRED_EX}{new_filename}{Fore.RESET} "
                       f"- already exists, skipping")
                 failed_rename_files[filename] = file_size
             else:
                 os.rename(old_filename, new_filename)
-                print(f"{file_counter} {Fore.WHITE}{filename}{Fore.RESET} "
-                      f"was renamed to "
+                print(f"{file_counter}. {Fore.WHITE}{filename}{Fore.RESET}"
+                      f" was renamed to "
                       f"{Fore.GREEN + Style.BRIGHT}{new_filename_basename}{Style.RESET_ALL}")
                 success_rename_files[filename] = file_size
 
@@ -107,10 +107,11 @@ The current date and message are also output to the file.
 def create_rename_file_log(failed_rename_files, success_rename_files, failed_file_path, elapsed_time):
     # create a new file (failed rename files(count).txt) if such a file is already contained in the directory
     count = 1
+    name_of_renamed_file = os.path.splitext(failed_file_path)[0]
     while os.path.exists(failed_file_path):
         count += 1
         failed_file_path = os.path.abspath(os.path.join(os.path.dirname(failed_file_path),
-                                                        f"Renamed files({count}).txt"))
+                                                        f"{name_of_renamed_file}({count}).txt"))
 
     now = datetime.now()
     # format date as string e.g. "Sat 2023-05-13 17:12:36 PM"

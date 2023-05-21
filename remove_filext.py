@@ -40,7 +40,7 @@ def remove_file_extension(directory, extension_to_remove, remove_filext_path):
                     os.rename(os.path.join(directory, filename), new_path)
 
                     success_remove_ext_frm_files[filename] = file_size
-                    print(f"{file_counter}. File "
+                    print(f"{file_counter}. From file "
                           f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
                           f"was successfully removed extension to "
                           f"{Fore.CYAN}{new_path_basename}{Fore.RESET}")

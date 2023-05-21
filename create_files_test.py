@@ -17,9 +17,9 @@ def create_files(directory, extension):
         # os.makedirs(directory, exist_ok=True)
         filename_ext = ''
         # create 5 files in the folder
-        for file in range(1, 6):
+        for file_counter in range(1, 6):
             try:
-                filename_ext = os.path.join(directory, f"test_file{file}{extension}")
+                filename_ext = os.path.join(directory, f"test_file{file_counter}{extension}")
                 # create an empty file with .part or .!ut extension
                 open(filename_ext, 'w').close()
             except PermissionError:
@@ -53,8 +53,10 @@ def delete_files_without_extension(directory):
                     # Delete a file
                     os.remove(os.path.join(directory, file))
                 except OSError as e:
-                    print(f"Error deleting {Fore.RED}{file}{Fore.RESET}: {e.strerror}")
+                    print(f"Error deleting "
+                          f"{Fore.RED}{file}{Fore.RESET}: {e.strerror}")
     except OSError as e:
         # Display an error message in case of an error
-        print(f"Error reading directory {directory}: {e.strerror}")
+        print(f"Error reading directory "
+              f"{directory}: {e.strerror}")
 
