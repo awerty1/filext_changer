@@ -49,6 +49,7 @@ def choose_action():
         except ValueError:
             print("Invalid input, please enter a number 1 or 2 or 3")
 
+
 '''
 Function to perform action
 
@@ -89,7 +90,11 @@ def get_valid_extension():
         if extension.lower() in valid_extension:
             return extension
         else:
-            print("Error: the extension must be either '.part' or '.!ut'")
+            # print("Error: the extension must be either '.part' or '.!ut'")
+            # print(f"Error: the extension must be either" + " or ".join(valid_extension))
+            error_msg = "Error: the extension must be either {}"
+            valid_extension_msg = " or ".join(valid_extension)
+            print(error_msg.format(valid_extension_msg))
 
 
 '''
