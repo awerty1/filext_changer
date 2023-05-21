@@ -21,7 +21,6 @@ def remove_file_extension(directory, extension_to_remove, remove_filext_path):
     success_remove_ext_frm_files = {}
     failed_remove_ext_frm_files = {}
     try:
-        # print("")
         print(f"\nRemove files extensions occurs in the directory "
               f"{Fore.CYAN}{directory}{Fore.RESET}")
 

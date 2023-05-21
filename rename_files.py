@@ -23,12 +23,11 @@ A function that renames the extension ".! ut" to ".part" or vice versa.
 
 def rename_files(directory, extension, failed_file_path):
     start_time = time.time()
+    file_counter = 1
+    failed_rename_files = {}
+    success_rename_files = {}
     try:
-        file_counter = 1
-        failed_rename_files = {}
-        success_rename_files = {}
-        print("")
-        print(f"The extension change occurs in the directory "
+        print(f"\nThe extension change occurs in the directory "
               f"{Fore.CYAN}{directory}{Fore.RESET}")
 
         for filename in os.listdir(directory):
