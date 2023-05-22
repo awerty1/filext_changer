@@ -28,8 +28,10 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
     success_deleted_files = {}
     failed_deleted_files = {}
     try:
-        print(f"\nDeletion of files with the selected extension occurs in the directory: "
-              f"{Fore.CYAN}{directory}{Fore.RESET}")
+        print(f"\n{Fore.LIGHTWHITE_EX}"
+              f"Deletion of files with the selected extension occurs in the directory:"
+              f"{Fore.RESET} "
+              f"{Fore.BLUE}{directory}{Fore.RESET}")
 
         for filename in os.listdir(directory):
             if filename.endswith(extension):
@@ -40,12 +42,12 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                     success_deleted_files[filename] = file_size
                     print(f"{file_counter}. File "
                           f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
-                          f"was successfully deleted from "
-                          f"{Fore.CYAN}{directory}{Fore.RESET}")
+                          f"was successfully deleted from directory "
+                          f"{Fore.BLUE}{directory}{Fore.RESET}")
                 except OSError:
                     failed_deleted_files[filename] = file_size
-                    print(f"{file_counter}. Failed to deleted file "
-                          f"{Fore.LIGHTRED_EX}{filename}{Fore.RESET}")
+                    print(f"{file_counter}. {Fore.RED}Failed to deleted file{Fore.RESET} "
+                          f"{Fore.BLUE}{filename}{Fore.RESET}")
 
                 file_counter += 1
         # elapsed time
@@ -53,10 +55,11 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
         formatted_time = choose_action.format_elapsed_time(elapsed_time)
 
         deleted_files_count = len(success_deleted_files)
-        msg1_for_1 = f"\nDeleting files completed successfully! " \
-                     f"{deleted_files_count} file were deleted."
-        msg2_for_any = f"\nDeleting files completed successfully! " \
-                       f"{deleted_files_count} files were deleted."
+        msg1_for_1 = f"\n{Fore.GREEN}Deleting files completed successfully!{Fore.RESET} " \
+                     f"{Fore.LIGHTGREEN_EX}{deleted_files_count}{Fore.RESET} file were deleted."
+        msg2_for_any = f"\n{Fore.GREEN}Deleting files completed successfully!{Fore.RESET} " \
+                       f"{Fore.BLUE}{deleted_files_count}{Fore.RESET} " \
+                       f"{Fore.GREEN}files were deleted.{Fore.RESET}"
 
         if deleted_files_count == 1:
             print(msg1_for_1)
@@ -68,12 +71,12 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                                                      deleted_file_path, formatted_time)
 
         failed_deleted_files_count = len(failed_deleted_files)
-        msg1_for_1 = f"{failed_deleted_files_count} " \
-                     f"file failed to delete, check " \
-                     f"{Fore.CYAN}{deleted_file_path}{Fore.RESET}"
-        msg2_for_any = f"{failed_deleted_files_count} " \
-                       f"files failed to delete, check " \
-                       f"{Fore.CYAN}{deleted_file_path}{Fore.RESET}"
+        msg1_for_1 = f"{Fore.BLUE}{failed_deleted_files_count}{Fore.RESET} " \
+                     f"{Fore.RED}file failed to delete, check{Fore.RESET} " \
+                     f"{Fore.BLUE}{deleted_file_path}{Fore.RESET}"
+        msg2_for_any = f"{Fore.BLUE}{failed_deleted_files_count}{Fore.RESET} " \
+                       f"{Fore.RED}files failed to delete, check{Fore.RESET} " \
+                       f"{Fore.BLUE}{deleted_file_path}{Fore.RESET}"
 
         if failed_deleted_files_count == 1:
             print(msg1_for_1)
@@ -81,10 +84,13 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
             print(msg2_for_any)
 
     except FileNotFoundError:
-        print(f"Directory {Fore.CYAN}{directory}{Fore.RESET} "
-              f"does not exist")
+        print(f"{Fore.RED}Directory{Fore.RESET} "
+              f"{Fore.BLUE}{directory}{Fore.RESET} "
+              f"{Fore.RED}does not exist{Fore.RESET}")
     except Exception as e:
-        print(f"An error occurred while deleting files: "
+        print(f"{Fore.RED}"
+              f"An error occurred while deleting files:"
+              f"{Fore.RESET} "
               f"{Fore.LIGHTRED_EX}{str(e)}{Fore.RESET}")
 
 

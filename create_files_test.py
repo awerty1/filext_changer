@@ -15,21 +15,22 @@ def create_files(directory, extension):
     try:
         # create directory if it does not exist
         # os.makedirs(directory, exist_ok=True)
-        filename_ext = ''
+        # filename_ext = ''
         # create 5 files in the folder
         for file_counter in range(1, 6):
+            filename_ext = os.path.join(directory, f"test_file{file_counter}{extension}")
+            filename_ext_basename = os.path.basename(filename_ext)
             try:
-                filename_ext = os.path.join(directory, f"test_file{file_counter}{extension}")
                 # create an empty file with .part or .!ut extension
                 open(filename_ext, 'w').close()
             except PermissionError:
-                print(f"Failed to create file "
-                      f"{Fore.RED}{os.path.basename(filename_ext)}{Fore.RESET}"
-                      f" in the directory "
-                      f"{Fore.CYAN}{directory}{Fore.RESET}")
+                print(f"{Fore.RED}Failed to create file{Fore.RESET} "
+                      f"{Fore.BLUE}{filename_ext_basename}{Fore.RESET} "
+                      f"{Fore.RED}in the directory{Fore.RESET} "
+                      f"{Fore.BLUE}{directory}{Fore.RESET}")
     except OSError:
-        print(f"Failed to create directory "
-              f"{Fore.CYAN}{directory}{Fore.RESET}.")
+        print(f"{Fore.RED}Failed to create directory{Fore.RESET} "
+              f"{Fore.BLUE}{directory}{Fore.RESET}.")
 
 
 '''
@@ -53,10 +54,11 @@ def delete_files_without_extension(directory):
                     # Delete a file
                     os.remove(os.path.join(directory, file))
                 except OSError as e:
-                    print(f"Error deleting "
-                          f"{Fore.RED}{file}{Fore.RESET}: {e.strerror}")
+                    print(f"{Fore.RED}Error deleting{Fore.RESET} "
+                          f"{Fore.BLUE}{file}{Fore.RESET}: "
+                          f"{Fore.RED}{e.strerror}{Fore.RESET}")
     except OSError as e:
         # Display an error message in case of an error
-        print(f"Error reading directory "
-              f"{directory}: {e.strerror}")
+        print(f"{Fore.RED}Error reading directory "
+              f"{Fore.BLUE}{directory}{Fore.RESET}: {e.strerror}{Fore.RESET}")
 

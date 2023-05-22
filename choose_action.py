@@ -131,9 +131,7 @@ def format_size(size):
     return f"{size:.2f} PB"
 
 
-'''
-elapsed_time - elapsed time of function
-'''
+'''elapsed_time - elapsed time of function'''
 
 
 def format_elapsed_time(elapsed_time):
