@@ -61,4 +61,3 @@ def delete_files_without_extension(directory: str) -> None:
         # Display an error message in case of an error
         print(f"{Fore.RED}Error reading directory "
               f"{Fore.BLUE}{directory}{Fore.RESET}: {e.strerror}{Fore.RESET}")
-
