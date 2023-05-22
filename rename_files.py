@@ -21,7 +21,7 @@ A function that renames the extension ".! ut" to ".part" or vice versa.
 '''
 
 
-def rename_files(directory, extension, failed_file_path):
+def rename_files(directory: str, extension: str, failed_file_path: str) -> None:
     start_time = time.time()
     file_counter = 1
     failed_rename_files = {}
@@ -117,7 +117,8 @@ The current date and message are also output to the file.
 '''
 
 
-def create_rename_file_log(failed_rename_files, success_rename_files, failed_file_path, elapsed_time):
+def create_rename_file_log(failed_rename_files, success_rename_files,
+                           failed_file_path, elapsed_time) -> str:
     # create a new file (failed rename files(count).txt) if such a file is already contained in the directory
     count = 1
     name_of_renamed_file = os.path.splitext(failed_file_path)[0]

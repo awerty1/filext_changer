@@ -15,7 +15,7 @@ Function to remove file extension
 '''
 
 
-def remove_file_extension(directory, extension_to_remove, remove_filext_path):
+def remove_file_extension(directory: str, extension_to_remove: str, remove_filext_path: str) -> None:
     start_time = time.time()
     file_counter = 1
     success_remove_ext_frm_files = {}
@@ -104,8 +104,9 @@ elapsed_time - total file extension removal time
 '''
 
 
-def create_remove_ext_frm_files_log(failed_remove_ext_frm_files, success_remove_ext_frm_files,
-                                    remove_filext_path, elapsed_time):
+def create_remove_ext_frm_files_log(failed_remove_ext_frm_files: dict[str, int],
+                                    success_remove_ext_frm_files: dict[str, int],
+                                    remove_filext_path: str, elapsed_time: str) -> str:
     # create a new file (failed deleted files(count).txt)
     # if such a file is already contained in the directory
     count = 1
