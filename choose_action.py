@@ -15,7 +15,7 @@ enter the directory
 def enter_directory():
     while True:
         directory = input(f"{Fore.LIGHTWHITE_EX}"
-                          f"Enter path to directory: "
+                          f"Enter path to directory:"
                           f"{Fore.RESET} ")
         try:
             if not os.path.exists(directory):
