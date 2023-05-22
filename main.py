@@ -2,7 +2,7 @@ import os
 import create_files_test
 import choose_action
 # from termcolor import colored
-# from colorama import init
+from colorama import init, Fore
 
 # We call this function to enable color support in the terminal.
 # init()
@@ -68,7 +68,9 @@ def main():
         action = choose_action.choose_action()
         choose_action.perform_action(directory, extension, failed_file_path,
                                      deleted_file_path, remove_filext_path, action)
-        user_input = input("\nDo you want to continue? (y/n): ")
+        user_input = input(f"\n{Fore.MAGENTA}"
+                           f"Do you want to continue? (y/n):"
+                           f"{Fore.RESET} ")
         if user_input.lower() == "y":
             continue
         else:

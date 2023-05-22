@@ -41,9 +41,9 @@ def remove_file_extension(directory, extension_to_remove, remove_filext_path):
 
                     success_remove_ext_frm_files[filename] = file_size
                     print(f"{file_counter}. From file "
-                          f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
-                          f"was successfully removed extension to "
-                          f"{Fore.CYAN}{new_path_basename}{Fore.RESET}")
+                          f"{Fore.WHITE}{filename}{Fore.RESET}"
+                          f" was successfully removed extension to "
+                          f"{Fore.GREEN + Style.BRIGHT}{new_path_basename}{Style.RESET_ALL}")
                 except FileExistsError:
                     failed_remove_ext_frm_files[filename] = file_size
                     print(f"{file_counter}. Failed to remove extension from file "
