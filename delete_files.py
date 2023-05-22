@@ -40,10 +40,11 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                 try:
                     os.remove(filepath)
                     success_deleted_files[filename] = file_size
-                    print(f"{file_counter}. File "
-                          f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
-                          f"was successfully deleted from directory "
-                          f"{Fore.BLUE}{directory}{Fore.RESET}")
+                    print(f"{file_counter}. "
+                          f"{Fore.GREEN}File{Fore.RESET} "
+                          f"{Fore.BLUE + Style.BRIGHT}{filename}{Style.RESET_ALL} "
+                          f"{Fore.GREEN}was successfully deleted from directory{Style.RESET_ALL} "
+                          f"{Fore.BLUE + Style.BRIGHT}{directory}{Style.RESET_ALL}")
                 except OSError:
                     failed_deleted_files[filename] = file_size
                     print(f"{file_counter}. {Fore.RED}Failed to deleted file{Fore.RESET} "
@@ -55,11 +56,11 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
         formatted_time = choose_action.format_elapsed_time(elapsed_time)
 
         deleted_files_count = len(success_deleted_files)
-        msg1_for_1 = f"\n{Fore.GREEN}Deleting files completed successfully!{Fore.RESET} " \
+        msg1_for_1 = f"\n{Fore.GREEN + Style.BRIGHT}Deleting files completed successfully!{Style.RESET_ALL} " \
                      f"{Fore.LIGHTGREEN_EX}{deleted_files_count}{Fore.RESET} file were deleted."
-        msg2_for_any = f"\n{Fore.GREEN}Deleting files completed successfully!{Fore.RESET} " \
+        msg2_for_any = f"\n{Fore.GREEN + Style.BRIGHT}Deleting files completed successfully!{Style.RESET_ALL} " \
                        f"{Fore.BLUE}{deleted_files_count}{Fore.RESET} " \
-                       f"{Fore.GREEN}files were deleted.{Fore.RESET}"
+                       f"{Fore.GREEN + Style.BRIGHT}files were deleted.{Style.RESET_ALL}"
 
         if deleted_files_count == 1:
             print(msg1_for_1)
