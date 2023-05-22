@@ -14,12 +14,18 @@ enter the directory
 
 def enter_directory():
     while True:
-        directory = input("Enter path to directory: ")
+        directory = input(f"{Fore.LIGHTWHITE_EX}"
+                          f"Enter path to directory:"
+                          f"{Fore.RESET} ")
         try:
             if not os.path.exists(directory):
-                raise ValueError("The entered path does not exist.")
+                raise ValueError(f"{Fore.RED}"
+                                 f"The entered path does not exist."
+                                 f"{Fore.RESET}")
             elif not os.path.isdir(directory):
-                raise ValueError("The entered path is not a directory.")
+                raise ValueError(f"{Fore.RED}"
+                                 f"The entered path is not a directory."
+                                 f"{Fore.RESET}")
         except ValueError as error:
             print(error)
         else:
@@ -36,18 +42,26 @@ Function to choose action
 
 def choose_action():
     while True:
-        print(f"{Fore.LIGHTYELLOW_EX}Select an action to perform:{Fore.RESET}")
+        print(f"{Fore.LIGHTWHITE_EX}"
+              f"Select an action to perform:"
+              f"{Fore.RESET}")
         print("1. Rename files with a specific extension")
         print("2. Delete files with a specific extension")
         print("3. Remove files extension from the file")
         try:
-            action = int(input("Enter selection (1 or 2 or 3): "))
+            action = int(input(f"{Fore.LIGHTWHITE_EX}"
+                               f"Enter selection (1 or 2 or 3):"
+                               f"{Fore.RESET} "))
             if 1 <= action <= 3:
                 return action
             else:
-                print("Invalid input, please enter 1 or 2 or 3")
+                print(f"{Fore.RED}"
+                      f"Invalid input, please enter 1 or 2 or 3"
+                      f"{Fore.RESET}")
         except ValueError:
-            print("Invalid input, please enter a number 1 or 2 or 3")
+            print(f"{Fore.RED}"
+                  f"Invalid input, please enter a number 1 or 2 or 3"
+                  f"{Fore.RESET}")
 
 
 '''
@@ -86,13 +100,17 @@ def get_valid_extension():
     # Loop until a valid extension is entered
     valid_extension = ('.!ut', '.part')
     while True:
-        extension = input("Enter the file extension type (e.g. .!ut or .part): ")
+        extension = input(f"{Fore.LIGHTWHITE_EX}"
+                          f"Enter the file extension type (e.g. .!ut or .part):"
+                          f"{Fore.RESET} ")
         if extension.lower() in valid_extension:
             return extension
         else:
             # print("Error: the extension must be either '.part' or '.!ut'")
             # print(f"Error: the extension must be either" + " or ".join(valid_extension))
-            error_msg = "Error: the extension must be either {}"
+            error_msg = Fore.RED + \
+                        "Error: the extension must be either {}" + \
+                        Fore.RESET
             valid_extension_msg = " or ".join(valid_extension)
             print(error_msg.format(valid_extension_msg))
 
