@@ -11,7 +11,7 @@ Function to automatically create files in a directory
 '''
 
 
-def create_files(directory, extension):
+def create_files(directory: str, extension: str) -> None:
     try:
         # create directory if it does not exist
         # os.makedirs(directory, exist_ok=True)
@@ -42,7 +42,7 @@ Function to delete files without extension
 '''
 
 
-def delete_files_without_extension(directory):
+def delete_files_without_extension(directory: str) -> None:
     try:
         # Get a list of files in a folder
         files = os.listdir(directory)

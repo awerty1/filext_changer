@@ -27,8 +27,10 @@ def rename_files(directory, extension, failed_file_path):
     failed_rename_files = {}
     success_rename_files = {}
     try:
-        print(f"\nThe extension change occurs in the directory: "
-              f"{Fore.CYAN}{directory}{Fore.RESET}")
+        print(f"\n{Fore.LIGHTWHITE_EX}"
+              f"The extension change occurs in the directory:"
+              f"{Fore.RESET} "
+              f"{Fore.BLUE}{directory}{Fore.RESET}")
 
         for filename in os.listdir(directory):
             if not filename.endswith(extension):
@@ -42,14 +44,14 @@ def rename_files(directory, extension, failed_file_path):
             file_size = os.path.getsize(old_filename)
 
             if os.path.exists(new_filename):
-                print(f"{file_counter}. {Fore.LIGHTRED_EX}{new_filename}{Fore.RESET} "
-                      f"- already exists, skipping")
+                print(f"{file_counter}. {Fore.BLUE + Style.BRIGHT}{new_filename_basename}{Style.BRIGHT} "
+                      f"{Fore.RED}- already exists, skipping{Fore.RESET}")
                 failed_rename_files[filename] = file_size
             else:
                 os.rename(old_filename, new_filename)
                 print(f"{file_counter}. {Fore.WHITE}{filename}{Fore.RESET}"
-                      f" was renamed to "
-                      f"{Fore.GREEN + Style.BRIGHT}{new_filename_basename}{Style.RESET_ALL}")
+                      f" {Fore.GREEN + Style.BRIGHT}was renamed to{Style.RESET_ALL} "
+                      f"{Fore.BLUE + Style.BRIGHT}{new_filename_basename}{Style.RESET_ALL}")
                 success_rename_files[filename] = file_size
 
             file_counter += 1
@@ -59,10 +61,16 @@ def rename_files(directory, extension, failed_file_path):
         formatted_time = choose_action.format_elapsed_time(elapsed_time)
 
         success_rename_files_count = len(success_rename_files)
-        msg1_for_1 = f"\nFile extension replacement completed successfully!" \
-                     f" {success_rename_files_count} file were renamed."
-        msg2_for_any = f"\nFile extension replacement completed successfully!" \
-                       f" {success_rename_files_count} files were renamed."
+        msg1_for_1 = f"\n{Fore.GREEN + Style.BRIGHT}" \
+                     f"File extension replacement completed successfully!" \
+                     f"{Style.RESET_ALL}" \
+                     f" {Fore.BLUE}{success_rename_files_count}{Fore.RESET} " \
+                     f"{Fore.GREEN + Style.BRIGHT}file were renamed.{Style.RESET_ALL}"
+        msg2_for_any = f"\n{Fore.GREEN + Style.BRIGHT}" \
+                       f"File extension replacement completed successfully!" \
+                       f"{Style.RESET_ALL}" \
+                       f" {Fore.BLUE}{success_rename_files_count}{Fore.RESET} " \
+                       f"{Fore.GREEN + Style.BRIGHT}files were renamed.{Style.RESET_ALL}"
 
         if success_rename_files_count == 1:
             print(msg1_for_1)
@@ -74,10 +82,12 @@ def rename_files(directory, extension, failed_file_path):
                                                   failed_file_path, formatted_time)
 
         failed_rename_files_count = len(failed_rename_files)
-        msg1_for_1 = f"{failed_rename_files_count} file failed to rename, check " \
+        msg1_for_1 = f"{Fore.BLUE}{failed_rename_files_count}{Fore.RESET} " \
+                     f"{Fore.RED}file failed to rename, check{Fore.RESET} " \
                      f"{Fore.CYAN}{failed_file_path}{Fore.RESET}"
-        msg2_for_any = f"{failed_rename_files_count} files failed to rename, check " \
-                       f"{Fore.CYAN}{failed_file_path}{Fore.RESET}"
+        msg2_for_any = f"{Fore.BLUE}{failed_rename_files_count}{Fore.RESET} " \
+                       f"{Fore.RED}files failed to rename, check{Fore.RESET} " \
+                       f"{Fore.BLUE}{failed_file_path}{Fore.RESET}"
 
         if failed_rename_files_count == 1:
             print(msg1_for_1)
@@ -85,9 +95,12 @@ def rename_files(directory, extension, failed_file_path):
             print(msg2_for_any)
 
     except FileNotFoundError:
-        print(f"Directory {Fore.CYAN}{directory}{Fore.CYAN} not found.")
+        print(f"{Fore.RED}Directory{Fore.RESET} "
+              f"{Fore.RED}{directory}{Fore.RESET} "
+              f"{Fore.RED}not found.{Fore.RESET}")
     except OSError:
-        print(f"Cannot access directory {Fore.CYAN}{directory}{Fore.CYAN}.")
+        print(f"{Fore.RED}Cannot access directory{Fore.RESET} "
+              f"{Fore.BLUE}{directory}{Fore.RESET}.")
 
 
 '''

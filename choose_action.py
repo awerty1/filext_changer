@@ -50,17 +50,17 @@ def choose_action():
         print("3. Remove files extension from the file")
         try:
             action = int(input(f"{Fore.LIGHTWHITE_EX}"
-                               f"Enter selection (1 or 2 or 3):"
+                               f"Enter selection (1-3):"
                                f"{Fore.RESET} "))
             if 1 <= action <= 3:
                 return action
             else:
                 print(f"{Fore.RED}"
-                      f"Invalid input, please enter 1 or 2 or 3"
+                      f"Invalid input, please enter 1, 2 or 3"
                       f"{Fore.RESET}")
         except ValueError:
             print(f"{Fore.RED}"
-                  f"Invalid input, please enter a number 1 or 2 or 3"
+                  f"Invalid input, please enter a number between 1 and 3"
                   f"{Fore.RESET}")
 
 
