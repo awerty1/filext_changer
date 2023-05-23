@@ -2,7 +2,7 @@
 
 ## Description: 
 **filext_changer.py** - script to change file extension .!ut to .part and vice versa.
-It also allows you to delete files of a certain extension.
+It also allows you to delete files of a certain extension or remove the extension from files.
 
 ## Libraries:
 1. os (for os functions)
