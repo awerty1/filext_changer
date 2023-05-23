@@ -68,7 +68,7 @@ def main():
         action = choose_action.choose_action()
         choose_action.perform_action(directory, extension, failed_file_path,
                                      deleted_file_path, remove_filext_path, action)
-        user_input = input(f"\n{Fore.MAGENTA}"
+        user_input = input(f"\n{Fore.LIGHTWHITE_EX}"
                            f"Do you want to continue? (y/n):"
                            f"{Fore.RESET} ")
         if user_input.lower() == "y":

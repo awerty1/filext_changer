@@ -24,7 +24,7 @@ def remove_file_extension(directory: str, extension_to_remove: str, remove_filex
         print(f"\n{Fore.LIGHTWHITE_EX}"
               f"Remove files extensions occurs in the directory:"
               f"{Fore.RESET} "
-              f"{Fore.CYAN}{directory}{Fore.RESET}")
+              f"{Fore.BLUE}{directory}{Fore.RESET}")
 
         # Iterate over all files in a directory
         for filename in os.listdir(directory):
@@ -42,10 +42,11 @@ def remove_file_extension(directory: str, extension_to_remove: str, remove_filex
                     os.rename(os.path.join(directory, filename), new_path)
 
                     success_remove_ext_frm_files[filename] = file_size
-                    print(f"{file_counter}. From file "
+                    print(f"{file_counter}. "
+                          f"{Fore.GREEN}From file{Fore.RESET} "
                           f"{Fore.WHITE}{filename}{Fore.RESET}"
-                          f" was successfully removed extension to "
-                          f"{Fore.GREEN + Style.BRIGHT}{new_path_basename}{Style.RESET_ALL}")
+                          f" {Fore.GREEN}was successfully removed extension to{Fore.RESET} "
+                          f"{Fore.BLUE + Style.BRIGHT}{new_path_basename}{Style.RESET_ALL}")
                 except FileExistsError:
                     failed_remove_ext_frm_files[filename] = file_size
                     print(f"{file_counter}. "
@@ -59,10 +60,12 @@ def remove_file_extension(directory: str, extension_to_remove: str, remove_filex
         formatted_time = choose_action.format_elapsed_time(elapsed_time)
 
         deleted_files_count = len(success_remove_ext_frm_files)
-        msg1_for_1 = f"\nRemoved file extension completed successfully! " \
-                     f"{deleted_files_count} file were deleted."
-        msg2_for_any = f"\nRemoved files extensions completed successfully! " \
-                       f"{deleted_files_count} files extension were removed."
+        msg1_for_1 = f"\n{Fore.GREEN}Removed file extension completed successfully!{Fore.RESET} " \
+                     f"{Fore.BLUE}{deleted_files_count}{Fore.RESET} " \
+                     f"{Fore.GREEN}file were deleted.{Fore.RESET}"
+        msg2_for_any = f"\n{Fore.GREEN}Removed files extensions completed successfully!{Fore.RESET} " \
+                       f"{Fore.BLUE}{deleted_files_count}{Fore.RESET} " \
+                       f"{Fore.GREEN}files extension were removed.{Fore.RESET}"
 
         if deleted_files_count == 1:
             print(msg1_for_1)
@@ -74,22 +77,23 @@ def remove_file_extension(directory: str, extension_to_remove: str, remove_filex
                                                              remove_filext_path, formatted_time)
 
         failed_deleted_files_count = len(failed_remove_ext_frm_files)
-        msg1_for_1 = f"{failed_deleted_files_count} " \
-                     f"file failed to remove extension, check " \
-                     f"{Fore.CYAN}{remove_filext_path}{Fore.RESET}"
-        msg2_for_any = f"{failed_deleted_files_count} " \
-                       f"files failed to remove extension, check " \
-                       f"{Fore.CYAN}{remove_filext_path}{Fore.RESET}"
+        msg1_for_1 = f"{Fore.BLUE}{failed_deleted_files_count}{Fore.RESET} " \
+                     f"{Fore.RED}file failed to remove extension, check{Fore.RESET} " \
+                     f"{Fore.BLUE}{remove_filext_path}{Fore.RESET}"
+        msg2_for_any = f"{Fore.BLUE}{failed_deleted_files_count}{Fore.RESET} " \
+                       f"{Fore.RED}files failed to remove extension, check{Fore.RESET} " \
+                       f"{Fore.BLUE}{remove_filext_path}{Fore.RESET}"
 
         if failed_deleted_files_count == 1:
             print(msg1_for_1)
         else:
             print(msg2_for_any)
     except FileNotFoundError:
-        print(f"Directory {Fore.CYAN}{directory}{Fore.RESET} "
-              f"does not exist")
+        print(f"{Fore.RED}Directory{Fore.RESET} "
+              f"{Fore.BLUE}{directory}{Fore.RESET} "
+              f"{Fore.RED}does not exist{Fore.RESET}")
     except Exception as e:
-        print(f"An error occurred while removed files extension: "
+        print(f"{Fore.RED}An error occurred while removed files extension:{Fore.RESET} "
               f"{Fore.LIGHTRED_EX}{str(e)}{Fore.RESET}")
 
 
