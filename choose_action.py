@@ -1,6 +1,7 @@
 import os
 from colorama import Fore
 import add_extension
+import add_ext_to_ext
 import delete_files
 import rename_files
 import remove_filext
@@ -46,23 +47,28 @@ def choose_action() -> int:
         print(f"{Fore.LIGHTWHITE_EX}"
               f"Select an action to perform:"
               f"{Fore.RESET}")
-        print("1. Rename files with a specific extension")
-        print("2. Delete files with a specific extension")
-        print("3. Remove files extension from the file")
-        print("4. Add extensions to empty files")
+        options = [
+            "1. Rename files with a specific extension",
+            "2. Delete files with a specific extension",
+            "3. Remove files extension from the file",
+            "4. Add extensions to empty files",
+            "5. Add extension to files with specific extension",
+        ]
+        print("\n".join(options))
+        length = len(options)
         try:
             action: int = int(input(f"{Fore.LIGHTWHITE_EX}"
-                                    f"Enter selection (1-4):"
+                                    f"Enter selection (1-5):"
                                     f"{Fore.RESET} "))
-            if 1 <= action <= 4:
+            if 1 <= action <= length:
                 return action
             else:
                 print(f"{Fore.RED}"
-                      f"Invalid input, please enter 1, 2, 3 or 4"
+                      f"Invalid input, please enter a number between 1 and {length}"
                       f"{Fore.RESET}")
         except ValueError:
             print(f"{Fore.RED}"
-                  f"Invalid input, please enter a number between 1 and 4"
+                  f"Invalid input, please enter a number between 1 and {length}"
                   f"{Fore.RESET}")
 
 
@@ -79,7 +85,8 @@ Function to perform action
 
 
 def perform_action(directory: str, extension: str, failed_file_path: str,
-                   deleted_file_path: str, remove_filext_path: str, add_file_path: str, action: int) -> None:
+                   deleted_file_path: str, remove_filext_path: str, add_file_path: str,
+                   add_ext_to_ext_file_path: str, action: int) -> None:
     lower_extension: str = extension.lower()
     if action == 1:
         rename_files.rename_files(directory, lower_extension, failed_file_path)
@@ -89,6 +96,8 @@ def perform_action(directory: str, extension: str, failed_file_path: str,
         remove_filext.remove_file_extension(directory, lower_extension, remove_filext_path)
     elif action == 4:
         add_extension.add_extension(directory, lower_extension, add_file_path)
+    elif action == 5:
+        add_ext_to_ext.add_ext_to_ext(directory, lower_extension, add_ext_to_ext_file_path)
 
 
 '''

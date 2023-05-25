@@ -57,7 +57,8 @@ def main():
     name_of_renamed_files = 'Renamed files.txt'
     name_of_deleted_files = 'Deleted files.txt'
     name_of_remove_extensions_file = 'Removed extension.txt'
-    name_of_added_ext_fil = 'Added extension.txt'
+    name_of_added_ext_file = 'Added extension.txt'
+    name_of_added_ext_to_ext_file = 'Added extension to extension.txt'
     while True:
         directory = choose_action.enter_directory()
         extension = choose_action.get_valid_extension()
@@ -66,10 +67,12 @@ def main():
         failed_file_path = os.path.abspath(os.path.join(directory, name_of_renamed_files))
         deleted_file_path = os.path.abspath(os.path.join(directory, name_of_deleted_files))
         remove_filext_path = os.path.abspath(os.path.join(directory, name_of_remove_extensions_file))
-        add_file_path = os.path.abspath(os.path.join(directory, name_of_added_ext_fil))
+        add_file_path = os.path.abspath(os.path.join(directory, name_of_added_ext_file))
+        name_of_added_ext_to_ext_file = os.path.abspath(os.path.join(directory, name_of_added_ext_to_ext_file))
         action = choose_action.choose_action()
         choose_action.perform_action(directory, extension, failed_file_path,
-                                     deleted_file_path, remove_filext_path, add_file_path, action)
+                                     deleted_file_path, remove_filext_path, add_file_path,
+                                     name_of_added_ext_to_ext_file, action)
         user_input = input(f"\n{Fore.LIGHTWHITE_EX}"
                            f"Do you want to continue? (y/n):"
                            f"{Fore.RESET} ")
