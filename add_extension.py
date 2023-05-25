@@ -42,7 +42,7 @@ def add_extension(directory: str, add_extension_to_file: str, add_filext_path: s
                     print(f"{file_counter}. "
                           f"{Fore.GREEN}To file{Fore.RESET} "
                           f"{Fore.WHITE}{filename}{Fore.RESET}"
-                          f" {Fore.GREEN}was successfully added extension{Fore.RESET} "
+                          f" {Fore.GREEN}was added extension successfully{Fore.RESET} "
                           f"{Fore.BLUE + Style.BRIGHT}{new_path_basename}{Style.RESET_ALL}")
                 except FileExistsError:
                     failed_add_ext_to_files[filename] = file_size
