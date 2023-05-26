@@ -6,6 +6,12 @@ from colorama import init, Fore, Style
 import choose_action
 
 '''
+Function to add an extension to an existing extension
+
+#variables
+*directory
+*add_extension_to_file
+*add_filext_path
 '''
 
 
@@ -14,7 +20,7 @@ def add_ext_to_ext(directory: str, add_extension_to_file: str, add_filext_path: 
     file_counter = 1
     success_add_ext_to_files = {}
     failed_add_ext_to_files = {}
-    ext_search = '.!ut'
+    ext_search = choose_action.get_valid_extension_to_add_function()
     try:
         print(f"\n{Fore.LIGHTWHITE_EX}"
               f"Adding file extensions occurs in the directory:"

@@ -5,6 +5,7 @@ import add_ext_to_ext
 import delete_files
 import rename_files
 import remove_filext
+import extensions_config
 
 '''
 enter the directory
@@ -112,21 +113,55 @@ Accepts extensions '.!ut' || '.part'.
 
 def get_valid_extension() -> str:
     # Loop until a valid extension is entered
-    valid_extension: tuple[str, str] = ('.!ut', '.part')
     while True:
         extension: str = input(f"{Fore.LIGHTWHITE_EX}"
                                f"Enter the file extension type (e.g. .!ut or .part):"
-                               f"{Fore.RESET} ")
-        if extension.lower() in valid_extension:
+                               f"{Fore.RESET} ").strip().lower()
+        if extension in extensions_config.valid_extension:
             return extension
         else:
             # print("Error: the extension must be either '.part' or '.!ut'")
             # print(f"Error: the extension must be either" + " or ".join(valid_extension))
-            error_msg: str = Fore.RED + \
-                        "Error: the extension must be either {}" + \
-                        Fore.RESET
-            valid_extension_msg: str = " or ".join(valid_extension)
+            valid_extension_msg: str = " or ".join(extensions_config.valid_extension)
+            error_msg: str = f"{Fore.RED}" \
+                             f"Error: the extension must be either {valid_extension_msg}" \
+                             f"{Fore.RESET}"
             print(error_msg.format(valid_extension_msg))
+
+
+'''
+Function for the 5th option.
+Required to install the extension.
+'''
+
+
+def get_valid_extension_to_add_function() -> str:
+    while True:
+        try:
+            extension: str = input(f"{Fore.LIGHTWHITE_EX}"
+                                   f"Enter the extension to which you want to add "
+                                   f"the previously selected (e.g. .txt): "
+                                   f"{Fore.RESET} ").strip().lower()
+            if not extension:
+                raise ValueError(f"{Fore.RED}"
+                                 f"Extension cannot be an empty string."
+                                 f"{Fore.RESET}")
+            if extension in extensions_config.duplication_extension:
+                raise ValueError(f"{Fore.RED}"
+                                 f"You cannot add an extension to .part or .!ut"
+                                 f"{Fore.RESET}")
+            if extension in extensions_config.valid_extensions:
+                return extension
+            else:
+                valid_extension_msg: str = ", ".join(extensions_config.valid_extensions)
+                error_msg: str = f"{Fore.RED}" \
+                                 f"Error: the extension must be either {valid_extension_msg}" \
+                                 f"{Fore.RESET}"
+                print(error_msg.format(valid_extension_msg))
+        except ValueError as ve:
+            print(f"{Fore.RED}"
+                  f"Error: {ve}"
+                  f"{Fore.RESET}")
 
 
 '''
