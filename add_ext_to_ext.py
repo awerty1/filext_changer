@@ -103,31 +103,31 @@ Function for saving information about operations to a file
 
 
 def create_add_ext_files_log(failed_added_ext_to_files: dict[str, int],
-                             success_remove_ext_frm_files: dict[str, int],
-                             remove_filext_path: str, elapsed_time: str) -> str:
+                             success_add_ext_to_files: dict[str, int],
+                             add_filext_path: str, elapsed_time: str) -> str:
     # create a new file (failed deleted files(count).txt)
     # if such a file is already contained in the directory
     count = 1
-    name_of_file_without_extension = os.path.splitext(remove_filext_path)[0]
-    while os.path.exists(remove_filext_path):
+    name_of_file_without_extension = os.path.splitext(add_filext_path)[0]
+    while os.path.exists(add_filext_path):
         count += 1
-        remove_filext_path = os.path.abspath(os.path.join(os.path.dirname(remove_filext_path),
-                                                          f"{name_of_file_without_extension}({count}).txt"))
+        add_filext_path = os.path.abspath(os.path.join(os.path.dirname(add_filext_path),
+                                                       f"{name_of_file_without_extension}({count}).txt"))
     now = datetime.now()
     # format date as string e.g. "Sat 2023-05-13 17:12:36 PM"
     date_string = now.strftime("%a %Y-%m-%d %H:%M:%S %p %Z")
     # total size of deleted files
-    total_size = sum(success_remove_ext_frm_files.values())
+    total_size = sum(success_add_ext_to_files.values())
     total_size = choose_action.format_size(total_size)
 
     # write list of "unsuccessful deleted" of files
-    with open(remove_filext_path, "w") as f:
+    with open(add_filext_path, "w") as f:
         # write date followed by new line
         f.write("Current date: " + date_string + "\n")
         # write current directory
-        f.write("Current directory: " + os.path.dirname(remove_filext_path) + "\n")
+        f.write("Current directory: " + os.path.dirname(add_filext_path) + "\n")
         # count of all deleted files
-        f.write(f"Total removed extension files: {len(success_remove_ext_frm_files)}\n")
+        f.write(f"Total removed extension files: {len(success_add_ext_to_files)}\n")
         # count of failed deleted files
         f.write(f"Total failed removed extension files: {len(failed_added_ext_to_files)}\n")
         # total size of deleted files
@@ -145,7 +145,7 @@ def create_add_ext_files_log(failed_added_ext_to_files: dict[str, int],
                 file_label = choose_action.format_size(file_size)
                 f.write(f"{i}. {file}  {file_label}\n")
         # write msg is all file extensions added successfully
-        elif success_remove_ext_frm_files and not failed_added_ext_to_files:
+        elif success_add_ext_to_files and not failed_added_ext_to_files:
             f.write('\n#####################################################')
             f.write('\n# Great job! All file extension added successfully! #')
             f.write('\n#####################################################')
@@ -156,12 +156,12 @@ def create_add_ext_files_log(failed_added_ext_to_files: dict[str, int],
             f.write('\n#######################################')
 
         # write list of successfully added files extensions
-        if success_remove_ext_frm_files:
+        if success_add_ext_to_files:
             f.write('\n\n################################################')
-            f.write(f"\n# Successful added extension to empty files {len(success_remove_ext_frm_files)}: #")
+            f.write(f"\n# Successful added extension to empty files {len(success_add_ext_to_files)}: #")
             f.write('\n################################################\n\n')
             # add a number to each line of the list of successful added extensions
-            for i, (file, file_size) in enumerate(success_remove_ext_frm_files.items(), start=1):
+            for i, (file, file_size) in enumerate(success_add_ext_to_files.items(), start=1):
                 file_label = choose_action.format_size(file_size)
                 f.write(f"{i}. {file}  {file_label}\n")
-    return remove_filext_path
+    return add_filext_path
