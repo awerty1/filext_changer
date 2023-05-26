@@ -9,9 +9,9 @@ import choose_action
 Function to add an extension to an existing extension
 
 #variables
-*directory
-*add_extension_to_file
-*add_filext_path
+*directory - the directory to search for files
+*add_extension_to_file - the file extension to add (e.g., ".txt")
+*add_filext_path - file path for added extension to extension files
 '''
 
 
