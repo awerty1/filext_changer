@@ -28,7 +28,8 @@ It also allows you to delete files of a certain extension or remove the extensio
 - [x] Saving success renaming and failed renaming attempts and date to file.
 - [x] Deleting files with extension .!ut || .part
 - [x] Removing extension .!ut || .part.
-- [ ] Adding extension .!ut || .part to files without extension
+- [x] Adding extension .!ut || .part to files without extension
+- [x] Add extension to files with specific extension
 
 
 ## Screenshot of the program
