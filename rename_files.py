@@ -33,12 +33,17 @@ def rename_files(directory: str, extension: str, failed_file_path: str) -> None:
               f"{Fore.BLUE}{directory}{Fore.RESET}")
 
         for filename in os.listdir(directory):
-            if not filename.endswith(extension):
+            if not filename.lower().endswith(extension):
+            #if not filename.endswith(extension) and not filename.upper().endswith(extension):
+                #print("well done!")
                 continue
 
             old_filename = os.path.join(directory, filename)
             root, _ = os.path.splitext(old_filename)
+
             new_extension = '.part' if extension == '.!ut' else '.!ut'
+            #new_extension = '.part' if filename.upper().endswith('.!UT') else '.!ut'
+
             new_filename = root + new_extension
             new_filename_basename = os.path.basename(new_filename)
             file_size = os.path.getsize(old_filename)

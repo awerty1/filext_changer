@@ -30,7 +30,7 @@ def add_ext_to_ext(directory: str, add_extension_to_file: str, add_filext_path: 
         # Iterate over all files in a directory
         for filename in os.listdir(directory):
             # Check that the file has extension
-            if filename.endswith(ext_search):
+            if filename.lower().endswith(ext_search):
                 filepath = os.path.join(directory, filename)
                 file_size = os.path.getsize(filepath)
                 try:
