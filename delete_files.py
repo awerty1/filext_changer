@@ -34,7 +34,7 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
               f"{Fore.BLUE}{directory}{Fore.RESET}")
 
         for filename in os.listdir(directory):
-            if filename.endswith(extension):
+            if filename.lower().endswith(extension):
                 filepath = os.path.join(directory, filename)
                 file_size = os.path.getsize(filepath)
                 try:
@@ -57,7 +57,8 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
 
         deleted_files_count = len(success_deleted_files)
         msg1_for_1 = f"\n{Fore.GREEN + Style.BRIGHT}Deleting files completed successfully!{Style.RESET_ALL} " \
-                     f"{Fore.LIGHTGREEN_EX}{deleted_files_count}{Fore.RESET} file were deleted."
+                     f"{Fore.BLUE}{deleted_files_count}{Fore.RESET} " \
+                     f"{Fore.GREEN + Style.BRIGHT}file were deleted.{Style.RESET_ALL}"
         msg2_for_any = f"\n{Fore.GREEN + Style.BRIGHT}Deleting files completed successfully!{Style.RESET_ALL} " \
                        f"{Fore.BLUE}{deleted_files_count}{Fore.RESET} " \
                        f"{Fore.GREEN + Style.BRIGHT}files were deleted.{Style.RESET_ALL}"
