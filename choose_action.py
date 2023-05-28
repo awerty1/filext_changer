@@ -1,6 +1,6 @@
 import os
 from colorama import Fore
-import add_extension
+import add_extension_to_empty_files
 import add_ext_to_ext
 import delete_files
 import rename_files
@@ -96,7 +96,7 @@ def perform_action(directory: str, extension: str, failed_file_path: str,
     elif action == 3:
         remove_filext.remove_file_extension(directory, lower_extension, remove_filext_path)
     elif action == 4:
-        add_extension.add_extension(directory, lower_extension, add_file_path)
+        add_extension_to_empty_files.add_extension(directory, lower_extension, add_file_path)
     elif action == 5:
         add_ext_to_ext.add_ext_to_ext(directory, lower_extension, add_ext_to_ext_file_path)
 
