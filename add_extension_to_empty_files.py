@@ -50,7 +50,7 @@ def add_extension(directory: str, add_extension_to_file: str, add_filext_path: s
                     print(f"{file_counter}. "
                           f"{Fore.RED}Failed to add extension to file{Fore.RESET} "
                           f"{Fore.BLUE}{filename}{Fore.RESET}"
-                          f"{Fore.RED}. File {Fore.RESET}"
+                          f"{Fore.RED}, file {Fore.RESET}"
                           f"{Fore.BLUE}{base_filename}{Fore.RESET} "
                           f"{Fore.RED}exists.{Fore.RESET}")
 

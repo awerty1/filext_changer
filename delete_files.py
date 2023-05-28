@@ -5,7 +5,6 @@ from datetime import datetime
 from colorama import init, Fore, Style
 import choose_action
 
-
 # We call this function to enable color support in the terminal.
 # init()
 
@@ -45,12 +44,19 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                           f"{Fore.BLUE + Style.BRIGHT}{filename}{Style.RESET_ALL} "
                           f"{Fore.GREEN}was successfully deleted from directory{Style.RESET_ALL} "
                           f"{Fore.BLUE + Style.BRIGHT}{directory}{Style.RESET_ALL}")
-                except OSError:
+                except OSError as e:
                     failed_deleted_files[filename] = file_size
                     print(f"{file_counter}. {Fore.RED}Failed to deleted file{Fore.RESET} "
-                          f"{Fore.BLUE}{filename}{Fore.RESET}")
+                          f"{Fore.BLUE}{filename}{Fore.RESET} "
+                          f"{Fore.RED}- {e.strerror} ({e.errno}).{Fore.RESET}")
+                    if e.errno == 13:
+                        print(f"{Fore.RED}The file is read-only, "
+                              f"check file properties and try deleting again.{Fore.RESET}")
+                    else:
+                        print(f"Unknown Error, need to add error code")
 
                 file_counter += 1
+
         # elapsed time
         elapsed_time = time.time() - start_time
         formatted_time = choose_action.format_elapsed_time(elapsed_time)

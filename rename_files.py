@@ -89,7 +89,7 @@ def rename_files(directory: str, extension: str, failed_file_path: str) -> None:
         failed_rename_files_count = len(failed_rename_files)
         msg1_for_1 = f"{Fore.BLUE}{failed_rename_files_count}{Fore.RESET} " \
                      f"{Fore.RED}file failed to rename, check{Fore.RESET} " \
-                     f"{Fore.CYAN}{failed_file_path}{Fore.RESET}"
+                     f"{Fore.BLUE}{failed_file_path}{Fore.RESET}"
         msg2_for_any = f"{Fore.BLUE}{failed_rename_files_count}{Fore.RESET} " \
                        f"{Fore.RED}files failed to rename, check{Fore.RESET} " \
                        f"{Fore.BLUE}{failed_file_path}{Fore.RESET}"

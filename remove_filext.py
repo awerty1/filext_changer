@@ -49,9 +49,13 @@ def remove_file_extension(directory: str, extension_to_remove: str, remove_filex
                           f"{Fore.BLUE + Style.BRIGHT}{new_path_basename}{Style.RESET_ALL}")
                 except FileExistsError:
                     failed_remove_ext_frm_files[filename] = file_size
+                    base_name = os.path.splitext(filename)[0]
                     print(f"{file_counter}. "
                           f"{Fore.RED}Failed to remove extension from file{Fore.RESET} "
-                          f"{Fore.LIGHTRED_EX}{filename}{Fore.RESET}")
+                          f"{Fore.BLUE}{filename}{Fore.RESET}"
+                          f"{Fore.RED}, file {Fore.RESET}"
+                          f"{Fore.BLUE}{base_name}{Fore.RESET} "
+                          f"{Fore.RED}exists.{Fore.RESET}")
 
                 file_counter += 1
 
