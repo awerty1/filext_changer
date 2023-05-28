@@ -21,7 +21,7 @@ def create_files(directory: str, extension: str) -> None:
             filename_ext = os.path.join(directory, f"test_file{file_counter}{extension}")
             filename_ext_basename = os.path.basename(filename_ext)
             try:
-                # create an empty file with .part or .!ut extension
+                # create an empty file with '.part' or '.!ut' extension
                 open(filename_ext, 'w').close()
             except PermissionError:
                 print(f"{Fore.RED}Failed to create file{Fore.RESET} "

@@ -29,7 +29,7 @@ def remove_file_extension(directory: str, extension_to_remove: str, remove_filex
         # Iterate over all files in a directory
         for filename in os.listdir(directory):
             # Check that the file has the correct extension
-            if filename.endswith(extension_to_remove):
+            if filename.lower().endswith(extension_to_remove):
                 filepath = os.path.join(directory, filename)
                 file_size = os.path.getsize(filepath)
                 try:
@@ -62,10 +62,10 @@ def remove_file_extension(directory: str, extension_to_remove: str, remove_filex
         deleted_files_count = len(success_remove_ext_frm_files)
         msg1_for_1 = f"\n{Fore.GREEN}Removed file extension completed successfully!{Fore.RESET} " \
                      f"{Fore.BLUE}{deleted_files_count}{Fore.RESET} " \
-                     f"{Fore.GREEN}file were deleted.{Fore.RESET}"
+                     f"{Fore.GREEN + Style.BRIGHT}file were deleted.{Style.RESET_ALL}"
         msg2_for_any = f"\n{Fore.GREEN}Removed files extensions completed successfully!{Fore.RESET} " \
                        f"{Fore.BLUE}{deleted_files_count}{Fore.RESET} " \
-                       f"{Fore.GREEN}files extension were removed.{Fore.RESET}"
+                       f"{Fore.GREEN + Style.BRIGHT}files extension were removed.{Style.RESET_ALL}"
 
         if deleted_files_count == 1:
             print(msg1_for_1)
