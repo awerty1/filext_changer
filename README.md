@@ -42,5 +42,5 @@ It also allows you to delete files of a certain extension or remove the extensio
 - Add extension to empty file
 ![Add extension to empty file example](https://github.com/awerty1/filext_changer/blob/a83961734dd0c4408b5da3c11599df257baa2c4a/img/2023-05-25_21-12-00.png)
 - Add extension to file with specific extension
-![Add extension to file with specific extension example]()
+![Add extension to file with specific extension example](https://github.com/awerty1/filext_changer/blob/b738e34b803d91ab73812ff30cc812e95e3a2999/img/2023-05-28_15-37-12.png)
 
