@@ -34,7 +34,7 @@ def add_ext_to_ext(directory: str, add_extension_to_file: str, add_filext_path: 
                 filepath = os.path.join(directory, filename)
                 file_size = os.path.getsize(filepath)
                 try:
-                    # Создаем новое имя файла с добавленным расширением
+                    # Create a new filename with an extension added
                     old_path = os.path.join(directory, filename)
                     new_filename = filename + add_extension_to_file
                     new_path = os.path.join(directory, new_filename)

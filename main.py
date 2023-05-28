@@ -26,8 +26,8 @@ def main_conf():
     action = 2
 
     # function to auto-create files
-    create_files_test.create_files(directory, extension_ut)
-    create_files_test.create_files(directory, extension_part)
+    # create_files_test.create_files(directory, extension_ut)
+    # create_files_test.create_files(directory, extension_part)
 
     # function to auto-delete files
     create_files_test.delete_files_without_extension(directory)
