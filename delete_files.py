@@ -5,9 +5,8 @@ from datetime import datetime
 from colorama import init, Fore, Style
 import choose_action
 
-
 # We call this function to enable color support in the terminal.
-#init()
+# init()
 
 
 '''
@@ -24,40 +23,51 @@ Deletes all files with the given extension in the given directory
 
 def delete_file_with_extension(directory, extension, deleted_file_path):
     start_time = time.time()
-    file_counter = 0
+    file_counter = 1
     success_deleted_files = {}
     failed_deleted_files = {}
     try:
-        print("")
-        print(f"The extension change occurs in the directory "
-              f"{Fore.CYAN}{directory}{Fore.RESET}")
+        print(f"\n{Fore.LIGHTWHITE_EX}"
+              f"Deletion of files with the selected extension occurs in the directory:"
+              f"{Fore.RESET} "
+              f"{Fore.BLUE}{directory}{Fore.RESET}")
 
         for filename in os.listdir(directory):
-            if filename.endswith(extension):
+            if filename.lower().endswith(extension):
                 filepath = os.path.join(directory, filename)
                 file_size = os.path.getsize(filepath)
                 try:
                     os.remove(filepath)
                     success_deleted_files[filename] = file_size
-                    print(f"{file_counter + 1}. File "
-                          f"{Fore.GREEN + Style.BRIGHT}{filename}{Style.RESET_ALL} "
-                          f"was successfully deleted from "
-                          f"{Fore.CYAN}{directory}{Fore.RESET}")
-                except OSError:
+                    print(f"{file_counter}. "
+                          f"{Fore.GREEN}File{Fore.RESET} "
+                          f"{Fore.BLUE + Style.BRIGHT}{filename}{Style.RESET_ALL} "
+                          f"{Fore.GREEN}was successfully deleted from directory{Style.RESET_ALL} "
+                          f"{Fore.BLUE + Style.BRIGHT}{directory}{Style.RESET_ALL}")
+                except OSError as e:
                     failed_deleted_files[filename] = file_size
-                    print(f"{file_counter + 1}. Failed to deleted file "
-                          f"{Fore.LIGHTRED_EX}{filename}{Fore.RESET}")
+                    print(f"{file_counter}. {Fore.RED}Failed to deleted file{Fore.RESET} "
+                          f"{Fore.BLUE}{filename}{Fore.RESET} "
+                          f"{Fore.RED}- {e.strerror} ({e.errno}).{Fore.RESET}")
+                    if e.errno == 13:
+                        print(f"{Fore.RED}The file is read-only, "
+                              f"check file properties and try deleting again.{Fore.RESET}")
+                    else:
+                        print(f"Unknown Error, need to add error code")
 
                 file_counter += 1
+
         # elapsed time
         elapsed_time = time.time() - start_time
         formatted_time = choose_action.format_elapsed_time(elapsed_time)
 
         deleted_files_count = len(success_deleted_files)
-        msg1_for_1 = f"\nDeleting files completed successfully! " \
-                     f"{deleted_files_count} file were deleted."
-        msg2_for_any = f"\nDeleting files completed successfully! " \
-                       f"{deleted_files_count} files were deleted."
+        msg1_for_1 = f"\n{Fore.GREEN + Style.BRIGHT}Deleting files completed successfully!{Style.RESET_ALL} " \
+                     f"{Fore.BLUE}{deleted_files_count}{Fore.RESET} " \
+                     f"{Fore.GREEN + Style.BRIGHT}file were deleted.{Style.RESET_ALL}"
+        msg2_for_any = f"\n{Fore.GREEN + Style.BRIGHT}Deleting files completed successfully!{Style.RESET_ALL} " \
+                       f"{Fore.BLUE}{deleted_files_count}{Fore.RESET} " \
+                       f"{Fore.GREEN + Style.BRIGHT}files were deleted.{Style.RESET_ALL}"
 
         if deleted_files_count == 1:
             print(msg1_for_1)
@@ -69,12 +79,12 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
                                                      deleted_file_path, formatted_time)
 
         failed_deleted_files_count = len(failed_deleted_files)
-        msg1_for_1 = f"{failed_deleted_files_count} " \
-                     f"file failed to delete, check " \
-                     f"{Fore.CYAN}{deleted_file_path}{Fore.RESET}"
-        msg2_for_any = f"{failed_deleted_files_count} " \
-                       f"files failed to delete, check " \
-                       f"{Fore.CYAN}{deleted_file_path}{Fore.RESET}"
+        msg1_for_1 = f"{Fore.BLUE}{failed_deleted_files_count}{Fore.RESET} " \
+                     f"{Fore.RED}file failed to delete, check{Fore.RESET} " \
+                     f"{Fore.BLUE}{deleted_file_path}{Fore.RESET}"
+        msg2_for_any = f"{Fore.BLUE}{failed_deleted_files_count}{Fore.RESET} " \
+                       f"{Fore.RED}files failed to delete, check{Fore.RESET} " \
+                       f"{Fore.BLUE}{deleted_file_path}{Fore.RESET}"
 
         if failed_deleted_files_count == 1:
             print(msg1_for_1)
@@ -82,10 +92,13 @@ def delete_file_with_extension(directory, extension, deleted_file_path):
             print(msg2_for_any)
 
     except FileNotFoundError:
-        print(f"Directory {Fore.CYAN}{directory}{Fore.RESET} "
-              f"does not exist")
+        print(f"{Fore.RED}Directory{Fore.RESET} "
+              f"{Fore.BLUE}{directory}{Fore.RESET} "
+              f"{Fore.RED}does not exist{Fore.RESET}")
     except Exception as e:
-        print(f"An error occurred while deleting files: "
+        print(f"{Fore.RED}"
+              f"An error occurred while deleting files:"
+              f"{Fore.RESET} "
               f"{Fore.LIGHTRED_EX}{str(e)}{Fore.RESET}")
 
 
@@ -103,10 +116,11 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
     # create a new file (failed deleted files(count).txt)
     # if such a file is already contained in the directory
     count = 1
+    name_of_deleted_file = os.path.splitext(deleted_file_path)[0]
     while os.path.exists(deleted_file_path):
         count += 1
         deleted_file_path = os.path.abspath(os.path.join(os.path.dirname(deleted_file_path),
-                                                         f"Deleted files({count}).txt"))
+                                                         f"{name_of_deleted_file}({count}).txt"))
 
     now = datetime.now()
     # format date as string e.g. "Sat 2023-05-13 17:12:36 PM"
