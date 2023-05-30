@@ -1,5 +1,6 @@
 import os
 from colorama import Fore
+
 import add_extension_to_empty_files
 import add_ext_to_ext
 import delete_files

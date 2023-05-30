@@ -5,7 +5,6 @@ import main_config
 # from termcolor import colored
 from colorama import init, Fore
 
-
 # We call this function to enable color support in the terminal.
 # init()
 
