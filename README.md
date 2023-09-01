@@ -8,8 +8,7 @@ It also allows you to delete files of a certain extension or remove the extensio
 1. os (for os functions)
 2. datetime (for time functions)
 3. colorama (for color functions)
-4. datetime (for time functions)
-5. time (for time functions)
+4. time (for time functions)
 
 ## Files of program
 1. main.py - main function
