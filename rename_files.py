@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 # from termcolor import colored
 from colorama import init, Fore, Style
+
 import choose_action
 
 # We call this function to enable color support in the terminal.
