@@ -1,7 +1,7 @@
 import os
 import time
 from datetime import datetime
-# from termcolor import colored
+
 from colorama import init, Fore, Style
 
 import choose_action
