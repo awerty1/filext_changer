@@ -1,5 +1,5 @@
 import os
-# from termcolor import colored
+
 from colorama import init, Fore
 
 import create_files_test
@@ -8,7 +8,7 @@ import main_config
 
 
 # We call this function to enable color support in the terminal.
-# init()
+init()
 
 '''
 main_conf - configure from variables

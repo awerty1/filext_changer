@@ -1,7 +1,8 @@
 import os
-from unittest.mock import patch
+
 import pytest
 import unittest
+from unittest.mock import patch
 
 from choose_action import enter_directory
 from choose_action import choose_action

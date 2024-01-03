@@ -15,21 +15,42 @@ It also allows you to delete files of a certain extension or remove the extensio
 2. choose_action.py - function for choose action
 3. delete_files.py - function for delete files
 4. rename_files.py - function for rename files
-5. create_files_test.py - function for create files
-6. test_choose_action.py - function for unit tests
+5. remove_files.py - function for remove files
+6. add_extension_to_empty_files - appends an extension to a file without an extension
+7. add_ext_to_ext - adds an extension to an existing extension
+8. create_files_test.py - function for create files
+9. test_choose_action.py - function for unit tests
+10. main_config.py - config file for ease of use from the file
+11. extensions_config.py - configuration file for file extensions
 
 ## Measured time:
 1. Deletion of a million files occurs in 4 minutes
 2. Renaming a million files in 8 minutes
 
 ## Feature List:
-- [x] Change file extension .!ut to .part and vice versa.
-- [x] Saving success renaming and failed renaming attempts and date to file.
-- [x] Deleting files with extension .!ut || .part
-- [x] Removing extension .!ut || .part.
-- [x] Adding extension .!ut || .part to files without extension
-- [x] Add extension to files with specific extension
+- [x] Change file extension `.!ut` to `.part` and vice versa.
+- [x] Saving success renaming and failed renaming attempts and date to `deleted files.txt`.
+- [x] Deleting files with extension `.!ut` || `.part`.
+- [x] Removing extension `.!ut` || `.part`.
+- [x] Adding extension `.!ut` || `.part` to files without extension.
+- [x] Add extension to files with specific extension(`.txt`, `.jpg` etc.).
 
+## Example files:
+### Deleted files.txt
+```
+Current date: Wed 2024-01-03 13:54:14 PM
+Current directory: C:\Users\Username\Documents
+Total deleted files: 0
+Total failed deleted files: 2
+Total size of deleted files: 0.00 bytes
+Elapsed time: 00:00:00.003 ms.
+
+###########################
+# Unsuccessful deleted 2: #
+###########################
+1. file1.txt.!ut 5 kb
+2. file2.txt.!ut 5 kb
+```
 
 ## Screenshot of the program
 - Rename files with a specific extension  

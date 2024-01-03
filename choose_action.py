@@ -1,4 +1,5 @@
 import os
+
 from colorama import Fore
 
 import add_extension_to_empty_files
@@ -19,7 +20,7 @@ enter the directory
 def enter_directory() -> str:
     while True:
         directory: str = input(f"{Fore.LIGHTWHITE_EX}"
-                               f"Enter path to directory:"
+                               f"Enter path to directory (e.g. C:\\Users\\Username\\Documents):"
                                f"{Fore.RESET} ")
         try:
             if not os.path.exists(directory):
