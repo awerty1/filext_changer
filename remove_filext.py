@@ -5,6 +5,7 @@ from datetime import datetime
 from colorama import init, Fore, Style
 
 import choose_action
+import constants as cnst
 
 # We call this function to enable color support in the terminal.
 init()
@@ -149,31 +150,38 @@ def create_remove_ext_frm_files_log(failed_remove_ext_frm_files: dict[str, int],
         # elapsed time
         f.write(f"Elapsed time: {elapsed_time} ms.\n\n")
 
+        # const for msg in file
+        unsuccessful_remove_ext_msg = f'Unsuccessful removed extension {len(failed_remove_ext_frm_files)}:'
+        unsuccessful_remove_ext_msg_len = len(unsuccessful_remove_ext_msg)
+
+        successful_removed_ext_msg = f'Successful removed extension {len(success_remove_ext_frm_files)}:'
+        successful_removed_ext_msg_len = len(successful_removed_ext_msg)
+
         # write list of failed deleted files
         if failed_remove_ext_frm_files:
-            f.write('\n#####################################')
-            f.write(f"\n# Unsuccessful removed extension {len(failed_remove_ext_frm_files)}: #")
-            f.write('\n#####################################\n\n')
+            f.write(f'\n{cnst.hash_symbol * (unsuccessful_remove_ext_msg_len + cnst.four_spaces)}')
+            f.write(f"\n{cnst.hash_symbol} {unsuccessful_remove_ext_msg} {cnst.hash_symbol}")
+            f.write(f'\n{cnst.hash_symbol * (unsuccessful_remove_ext_msg_len + cnst.four_spaces)}\n\n')
             # add a number to each line of the list of failed deleted
             for i, (file, file_size) in enumerate(failed_remove_ext_frm_files.items(), start=1):
                 file_label = choose_action.format_size(file_size)
                 f.write(f"{i}. {file}  {file_label}\n")
         # write msg is all files deleted successfully
         elif success_remove_ext_frm_files and not failed_remove_ext_frm_files:
-            f.write('\n##############################################')
-            f.write('\n# Great job! All files extension removed successfully! #')
-            f.write('\n##############################################')
+            f.write(f'\n{cnst.hash_symbol * (cnst.great_job_remove_msg_len + cnst.four_spaces)}')
+            f.write(f'\n{cnst.hash_symbol} {cnst.great_job_remove_msg} {cnst.hash_symbol}')
+            f.write(f'\n{cnst.hash_symbol * (cnst.great_job_remove_msg_len + cnst.four_spaces)}')
         # write msg if extension does not found in directory
         else:
-            f.write('\n#######################################')
-            f.write('\n# Files not found, no such extension! #')
-            f.write('\n#######################################')
+            f.write(f'\n{cnst.hash_symbol * (cnst.file_not_found_ext_msg_len + cnst.four_spaces)}')
+            f.write(f'\n{cnst.hash_symbol} {cnst.file_not_found_ext_msg} {cnst.hash_symbol}')
+            f.write(f'\n{cnst.hash_symbol * (cnst.file_not_found_ext_msg_len + cnst.four_spaces)}')
 
         # write list of successfully deleted files
         if success_remove_ext_frm_files:
-            f.write('\n\n###################################')
-            f.write(f"\n# Successful removed extension {len(success_remove_ext_frm_files)}: #")
-            f.write('\n###################################\n\n')
+            f.write(f'\n\n{cnst.hash_symbol * (successful_removed_ext_msg_len + cnst.four_spaces)}')
+            f.write(f"\n{cnst.hash_symbol} {successful_removed_ext_msg} {cnst.hash_symbol}")
+            f.write(f'\n{cnst.hash_symbol * (successful_removed_ext_msg_len + cnst.four_spaces)}\n\n')
             # add a number to each line of the list of successful deleted
             for i, (file, file_size) in enumerate(success_remove_ext_frm_files.items(), start=1):
                 file_label = choose_action.format_size(file_size)

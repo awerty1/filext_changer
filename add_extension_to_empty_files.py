@@ -5,6 +5,7 @@ from datetime import datetime
 from colorama import init, Fore, Style
 
 import choose_action
+import constants as cnst
 
 # We call this function to enable color support in the terminal.
 init()
@@ -146,31 +147,38 @@ def create_add_ext_files_log(failed_added_ext_to_files: dict[str, int],
         # elapsed time
         f.write(f"Elapsed time: {elapsed_time} ms.\n\n")
 
+        # const for msg in file
+        unsuccessful_added_ext_to_empty_file_msg = f'Unsuccessfully added extension to empty file(s) {len(failed_added_ext_to_files)}:'
+        unsuccessful_added_ext_to_empty_file_msg_len = len(unsuccessful_added_ext_to_empty_file_msg)
+
+        successful_added_ext_to_empty_file_msg = f'Successfully added extension to empty file(s) {len(success_remove_ext_frm_files)}:'
+        successful_added_ext_to_empty_file_msg_len = len(successful_added_ext_to_empty_file_msg)
+
         # write list of failed extension added to file
         if failed_added_ext_to_files:
-            f.write('\n############################################')
-            f.write(f"\n# Unsuccessful added extension {len(failed_added_ext_to_files)}: #")
-            f.write('\n############################################\n\n')
+            f.write(f'\n{cnst.hash_symbol * (unsuccessful_added_ext_to_empty_file_msg_len + cnst.four_spaces)}')
+            f.write(f"\n{cnst.hash_symbol} {unsuccessful_added_ext_to_empty_file_msg} {cnst.hash_symbol}")
+            f.write(f'\n{cnst.hash_symbol * (unsuccessful_added_ext_to_empty_file_msg_len + cnst.four_spaces)}\n\n')
             # add a number to each line of the list of failed added extension
             for i, (file, file_size) in enumerate(failed_added_ext_to_files.items(), start=1):
                 file_label = choose_action.format_size(file_size)
                 f.write(f"{i}. {file}  {file_label}\n")
         # write msg is all file extensions added successfully
         elif success_remove_ext_frm_files and not failed_added_ext_to_files:
-            f.write('\n#####################################################')
-            f.write('\n# Great job! All file extension added successfully! #')
-            f.write('\n#####################################################')
+            f.write(f'\n{cnst.hash_symbol * (cnst.great_job_add_ext_to_empty_file_msg_len + cnst.four_spaces)}')
+            f.write(f'\n{cnst.hash_symbol} {cnst.great_job_add_ext_to_empty_file_msg} {cnst.hash_symbol}')
+            f.write(f'\n{cnst.hash_symbol * (cnst.great_job_add_ext_to_empty_file_msg_len + cnst.four_spaces)}')
         # write msg if extension does not found in directory
         else:
-            f.write('\n#######################################')
-            f.write('\n# Files not found, no such extension! #')
-            f.write('\n#######################################')
+            f.write(f'\n{cnst.hash_symbol * (cnst.file_not_found_ext_msg_len + cnst.four_spaces)}')
+            f.write(f'\n{cnst.hash_symbol} {cnst.file_not_found_ext_msg} {cnst.hash_symbol}')
+            f.write(f'\n{cnst.hash_symbol * (cnst.file_not_found_ext_msg_len + cnst.four_spaces)}')
 
         # write list of successfully added files extensions
         if success_remove_ext_frm_files:
-            f.write('\n\n################################################')
-            f.write(f"\n# Successful added extension to empty files {len(success_remove_ext_frm_files)}: #")
-            f.write('\n################################################\n\n')
+            f.write(f'\n\n{cnst.hash_symbol * (successful_added_ext_to_empty_file_msg_len + cnst.four_spaces)}')
+            f.write(f"\n{cnst.hash_symbol} {successful_added_ext_to_empty_file_msg} {cnst.hash_symbol}")
+            f.write(f'\n{cnst.hash_symbol * (successful_added_ext_to_empty_file_msg_len + cnst.four_spaces)}\n\n')
             # add a number to each line of the list of successful added extensions
             for i, (file, file_size) in enumerate(success_remove_ext_frm_files.items(), start=1):
                 file_label = choose_action.format_size(file_size)

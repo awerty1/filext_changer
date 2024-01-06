@@ -15,8 +15,8 @@ action = 2
 '''
 config 4 main
 '''
-name_of_renamed_files = 'Renamed files.txt'
-name_of_deleted_files = 'Deleted files.txt'
-name_of_remove_extensions_file = 'Removed extension.txt'
-name_of_added_ext_file = 'Added extension.txt'
-name_of_added_ext_to_ext_file = 'Added extension to extension.txt'
+name_of_renamed_files = 'Renamed files report.txt'
+name_of_deleted_files = 'Deleted files report.txt'
+name_of_remove_extensions_file = 'Removed extension report.txt'
+name_of_added_ext_file = 'Added extension report.txt'
+name_of_added_ext_to_ext_file = 'Added extension to extension report.txt'
