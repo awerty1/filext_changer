@@ -5,6 +5,7 @@ from datetime import datetime
 from colorama import init, Fore, Style
 
 import choose_action
+import constants as cnst
 
 # We call this function to enable color support in the terminal.
 init()
@@ -145,31 +146,38 @@ def create_deleted_files_log(failed_deleted_files, success_deleted_files, delete
         # elapsed time
         f.write(f"Elapsed time: {elapsed_time} ms.\n\n")
 
+        # const for msg in file
+        unsuccessful_delete_msg = f'Unsuccessful deleted {len(failed_deleted_files)}:'
+        unsuccessful_delete_msg_len = len(unsuccessful_delete_msg)
+
+        successful_delete_msg = f'Successful deleted {len(success_deleted_files)}:'
+        successful_delete_msg_len = len(successful_delete_msg)
+
         # write list of failed deleted files
         if failed_deleted_files:
-            f.write('\n###########################')
-            f.write(f"\n# Unsuccessful deleted {len(failed_deleted_files)}: #")
-            f.write('\n###########################\n\n')
+            f.write(f'\n{cnst.hash_symbol * (unsuccessful_delete_msg_len + cnst.four_spaces)}')
+            f.write(f"\n{cnst.hash_symbol} {unsuccessful_delete_msg} {cnst.hash_symbol}")
+            f.write(f'\n{cnst.hash_symbol * (unsuccessful_delete_msg_len + cnst.four_spaces)}\n\n')
             # add a number to each line of the list of failed deleted
             for i, (file, file_size) in enumerate(failed_deleted_files.items(), start=1):
                 file_label = choose_action.format_size(file_size)
                 f.write(f"{i}. {file}  {file_label}\n")
         # write msg is all files deleted successfully
         elif success_deleted_files and not failed_deleted_files:
-            f.write('\n##############################################')
-            f.write('\n# Great job! All files deleted successfully! #')
-            f.write('\n##############################################')
+            f.write(f'\n{cnst.hash_symbol * (cnst.great_job_delete_msg_len + cnst.four_spaces)}')
+            f.write(f'\n{cnst.hash_symbol} {cnst.great_job_delete_msg} {cnst.hash_symbol}')
+            f.write(f'\n{cnst.hash_symbol * (cnst.great_job_delete_msg_len + cnst.four_spaces)}')
         # write msg if extension does not found in directory
         else:
-            f.write('\n#######################################')
-            f.write('\n# Files not found, no such extension! #')
-            f.write('\n#######################################')
+            f.write(f'\n{cnst.hash_symbol * (cnst.file_not_found_ext_msg_len + cnst.four_spaces)}')
+            f.write(f'\n{cnst.hash_symbol} {cnst.file_not_found_ext_msg} {cnst.hash_symbol}')
+            f.write(f'\n{cnst.hash_symbol * (cnst.file_not_found_ext_msg_len + cnst.four_spaces)}')
 
         # write list of successfully deleted files
         if success_deleted_files:
-            f.write('\n\n#########################')
-            f.write(f"\n# Successful deleted {len(success_deleted_files)}: #")
-            f.write('\n#########################\n\n')
+            f.write(f'\n\n{cnst.hash_symbol * (successful_delete_msg_len + cnst.four_spaces)}')
+            f.write(f"\n{cnst.hash_symbol} {successful_delete_msg} {cnst.hash_symbol}")
+            f.write(f'\n{cnst.hash_symbol * (successful_delete_msg_len + cnst.four_spaces)}\n\n')
             # add a number to each line of the list of successful deleted
             for i, (file, file_size) in enumerate(success_deleted_files.items(), start=1):
                 file_label = choose_action.format_size(file_size)

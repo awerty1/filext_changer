@@ -5,6 +5,7 @@ from datetime import datetime
 from colorama import init, Fore, Style
 
 import choose_action
+import constants as cnst
 
 # We call this function to enable color support in the terminal.
 init()
@@ -155,31 +156,38 @@ def create_rename_file_log(failed_rename_files, success_rename_files,
         # elapsed time
         f.write(f"Elapsed time: {elapsed_time} ms.\n\n")
 
+        # const for msg in file
+        unsuccessful_rename_msg = f'Unsuccessful renames {len(failed_rename_files)}:'
+        unsuccessful_rename_msg_len = len(unsuccessful_rename_msg)
+
+        successful_rename_msg = f'Successful renames {len(success_rename_files)}:'
+        successful_rename_msg_len = len(successful_rename_msg)
+
         # write list of failed files
         if failed_rename_files:
-            f.write('\n###########################')
-            f.write(f"\n# Unsuccessful renames {len(failed_rename_files)}: #")
-            f.write('\n###########################\n\n')
+            f.write(f'\n{cnst.hash_symbol * (unsuccessful_rename_msg_len + cnst.four_spaces)}')
+            f.write(f"\n{cnst.hash_symbol} {unsuccessful_rename_msg} {cnst.hash_symbol}")
+            f.write(f'\n{cnst.hash_symbol * (unsuccessful_rename_msg_len + cnst.four_spaces)}\n\n')
             # add a number to each line of the list of failed renames
             for i, (file, file_size) in enumerate(failed_rename_files.items(), start=1):
                 file_label = choose_action.format_size(file_size)
                 f.write(f"{i}. {file}  {file_label}\n")
         # write msg is all files rename successfully
         elif success_rename_files and not failed_rename_files:
-            f.write('\n##############################################')
-            f.write('\n# Great job! All files renamed successfully! #')
-            f.write('\n##############################################')
+            f.write(f'\n{cnst.hash_symbol * (cnst.great_job_rename_msg_len + cnst.four_spaces)}')
+            f.write(f'\n{cnst.hash_symbol} {cnst.great_job_rename_msg} {cnst.hash_symbol}')
+            f.write(f'\n{cnst.hash_symbol * (cnst.great_job_rename_msg_len + cnst.four_spaces)}')
         # write msg if extension does not found in directory
         else:
-            f.write('\n#######################################')
-            f.write('\n# Files not found, no such extension! #')
-            f.write('\n#######################################')
+            f.write(f'\n{cnst.hash_symbol * (cnst.file_not_found_ext_msg_len + cnst.four_spaces)}')
+            f.write(f'\n{cnst.hash_symbol} {cnst.file_not_found_ext_msg} {cnst.hash_symbol}')
+            f.write(f'\n{cnst.hash_symbol * (cnst.file_not_found_ext_msg_len + cnst.four_spaces)}')
 
         # write list of successfully renamed files
         if success_rename_files:
-            f.write('\n\n#########################')
-            f.write(f"\n# Successful renames {len(success_rename_files)}: #")
-            f.write('\n#########################\n\n')
+            f.write(f'\n\n{cnst.hash_symbol * (successful_rename_msg_len + cnst.four_spaces)}')
+            f.write(f"\n{cnst.hash_symbol} {successful_rename_msg} {cnst.hash_symbol}")
+            f.write(f'\n{cnst.hash_symbol * (successful_rename_msg_len + cnst.four_spaces)}\n\n')
             # add a number to each line of the list of successful renames
             for i, (file, file_size) in enumerate(success_rename_files.items(), start=1):
                 file_label = choose_action.format_size(file_size)
